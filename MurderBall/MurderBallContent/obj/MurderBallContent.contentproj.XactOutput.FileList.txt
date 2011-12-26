@@ -1,3 +1,5 @@
 Content\MurderBallSound.xgs
 Content\Ball Sounds.xwb
+Content\BG Music.xwb
 Content\Ball Cues.xsb
+Content\BG Music.xsb

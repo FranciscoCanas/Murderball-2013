@@ -22,3 +22,26 @@ C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\Murder
 C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\bin\x86\Debug\Content\MurderBallSound.xgs
 C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\bin\x86\Debug\Content\Ball Sounds.xwb
 C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\bin\x86\Debug\Content\Ball Cues.xsb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\ball.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\particle_base.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man1.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man2.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\28917__junggle__btn107.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\32954__hardpcm__chip054.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\MurderBallSound.xgs
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\Ball Sounds.xwb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\Ball Cues.xsb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\MurderBall.exe
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\MurderBall.pdb
+D:\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall.exe
+D:\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall.pdb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\TitleIntro.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall.Strings.resources
+D:\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\MurderballTheme.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\BG Music.xwb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\BG Music.xsb

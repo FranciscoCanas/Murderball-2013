@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\bin\x86\Debug\Content\man.xnb</Output>
-      <Time>2011-12-20T18:25:14.3645059-05:00</Time>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man.xnb</Output>
+      <Time>2011-12-26T10:32:04.1940934-05:00</Time>
     </Item>
     <Item>
       <Source>ball.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\bin\x86\Debug\Content\ball.xnb</Output>
-      <Time>2011-12-25T12:48:54.1332914-05:00</Time>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\ball.xnb</Output>
+      <Time>2011-12-26T10:32:04.1930933-05:00</Time>
     </Item>
     <Item>
       <Source>particle_base.jpg</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\bin\x86\Debug\Content\particle_base.xnb</Output>
-      <Time>2011-12-21T19:17:41.6155729-05:00</Time>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\particle_base.xnb</Output>
+      <Time>2011-12-26T10:32:04.2110943-05:00</Time>
     </Item>
     <Item>
       <Source>man1.png</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\bin\x86\Debug\Content\man1.xnb</Output>
-      <Time>2011-12-25T12:25:42.5156955-05:00</Time>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man1.xnb</Output>
+      <Time>2011-12-26T10:32:04.1950934-05:00</Time>
     </Item>
     <Item>
       <Source>man2.png</Source>
@@ -43,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\bin\x86\Debug\Content\man2.xnb</Output>
-      <Time>2011-12-25T12:26:04.6479614-05:00</Time>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man2.xnb</Output>
+      <Time>2011-12-26T10:32:04.1960935-05:00</Time>
     </Item>
     <Item>
       <Source>28917__junggle__btn107.wav</Source>
@@ -52,8 +52,8 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\bin\x86\Debug\Content\28917__junggle__btn107.xnb</Output>
-      <Time>2011-12-23T18:13:39.824007-05:00</Time>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\28917__junggle__btn107.xnb</Output>
+      <Time>2011-12-26T10:32:04.1740922-05:00</Time>
     </Item>
     <Item>
       <Source>32954__hardpcm__chip054.wav</Source>
@@ -61,8 +61,26 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\bin\x86\Debug\Content\32954__hardpcm__chip054.xnb</Output>
-      <Time>2011-12-23T18:13:45.8313506-05:00</Time>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\32954__hardpcm__chip054.xnb</Output>
+      <Time>2011-12-26T10:32:04.1780924-05:00</Time>
+    </Item>
+    <Item>
+      <Source>TitleIntro.spritefont</Source>
+      <Name>TitleIntro</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\TitleIntro.xnb</Output>
+      <Time>2011-12-26T12:58:34.2909161-05:00</Time>
+    </Item>
+    <Item>
+      <Source>MurderballTheme.wav</Source>
+      <Name>MurderballTheme</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\MurderballTheme.xnb</Output>
+      <Time>2011-12-26T16:05:13.3504657-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -70,10 +88,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBallContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBallContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>D:\repos\Murderball-2013\MurderBall\MurderBallContent\</RootDirectory>
+      <LoggerRootDirectory>D:\repos\Murderball-2013\MurderBall\MurderBall\</LoggerRootDirectory>
+      <IntermediateDirectory>D:\repos\Murderball-2013\MurderBall\MurderBallContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
@@ -102,7 +120,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2011-12-21T11:56:33.2818654-05:00</Value>
+        <Value>2011-12-20T17:38:50.8632987-05:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

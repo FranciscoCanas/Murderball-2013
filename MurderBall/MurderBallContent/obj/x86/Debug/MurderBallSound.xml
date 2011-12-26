@@ -11,10 +11,8 @@
     Compression Preset Name = &lt;none&gt;;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
+    PC Bank Last Modified Low = 2344741733;
+    PC Bank Last Modified High = 30196751;
     Bank Last Revised Low = 686714928;
     Bank Last Revised High = 30196167;
 
@@ -36,8 +34,8 @@
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2179781964;
-            Last Modified High = 30196166;
+            Last Modified Low = 2229846650;
+            Last Modified High = 30196707;
         }
     }
 
@@ -59,8 +57,49 @@
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2613116750;
-            Last Modified High = 30196166;
+            Last Modified Low = 2229886652;
+            Last Modified High = 30196707;
+        }
+    }
+}
+
+</WaveBank>
+  <WaveBank Name="BG Music">Wave Bank
+{
+    Name = BG Music;
+    Xbox File = Xbox\BG Music.xwb;
+    Windows File = Win\BG Music.xwb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Seek Tables = 1;
+    Compression Preset Name = &lt;none&gt;;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 3432440670;
+    PC Bank Last Modified High = 30196753;
+    Bank Last Revised Low = 3392468384;
+    Bank Last Revised High = 30196753;
+
+    Wave
+    {
+        Name = titleTheme;
+        File = MurderballTheme.wav;
+        Build Settings Last Modified Low = 2968582329;
+        Build Settings Last Modified High = 30196748;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 124;
+            Play Region Length = 21168000;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2424181191;
+            Last Modified High = 30196748;
         }
     }
 }

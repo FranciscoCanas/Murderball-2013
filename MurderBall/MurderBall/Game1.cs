@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -19,6 +20,12 @@ namespace MurderBall
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont titleFont;
+
+        SoundBank titleSoundBank;
+        WaveBank titleWaveBank;
+        
+
         public AudioEngine audio = null;
         
         Boolean titleState = true;
@@ -38,6 +45,12 @@ namespace MurderBall
         public const int iPlayAreaRight = 680;
         public const int iPlayAreaHalf = 400;
 
+        Vector2 introTextPos;
+        private const String introText = "In the not-so-distant future, global corporations hold sway and virtually rule all of humanity. The subset of people who have committed crimes against these corporations are forced into massive mega-prisons, and forced into taking part in the brutal blood sports that fuel the entertainment industry. File sharers, music remixers, open source enthusiasts, and all other hated enemies of humanity's de-facto corporate rulers are thrown into the life or death gladiatorial competition known as...";
+        private String introTextW;
+        private const float titleUpdateInterval = 1.0f / 28.0f;
+        private float titleUpdateTimer = 0.0f;
+
 
         KeyboardState prevState1, keyState1;
         public static Texture2D particlebase;
@@ -45,7 +58,6 @@ namespace MurderBall
         public MurderBallGame()
         {
             graphics = new GraphicsDeviceManager(this);
-
             // Full screen here:
             graphics.IsFullScreen = false;
             graphics.PreferredBackBufferHeight = ScreenHeight;
@@ -53,8 +65,12 @@ namespace MurderBall
             Content.RootDirectory = "Content";
 
 
+           
 
-            audio = new AudioEngine("Content\\MurderBallSound.xgs");
+
+
+           
+            
         }
 
         /// <summary>
@@ -67,8 +83,14 @@ namespace MurderBall
         {
             // TODO: Add your initialization logic here
 
+            
             base.Initialize();
-        
+            audio = new AudioEngine("Content\\MurderBallSound.xgs");
+            titleWaveBank = new WaveBank(audio, "Content\\BG Music.xwb");
+            titleSoundBank = new SoundBank(audio, "Content\\BG Music.xsb");
+
+            InitTitle();
+         
         }
 
         /// <summary>
@@ -79,8 +101,23 @@ namespace MurderBall
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
             
+            
+
+        }
+
+        void InitTitle()
+        {
+            
+            //Cue titleMusicCue = titleSoundBank.GetCue("titleTheme");
+
+            audio.Update();
+            titleFont = Content.Load<SpriteFont>(@"TitleIntro");
+            introTextPos = new Vector2(200, 650);
+            titleUpdateTimer = 0.0f;
+            introTextW = WrapText(titleFont,introText, 400);
+            titleSoundBank.PlayCue("titleTheme");
+
 
         }
 
@@ -137,7 +174,9 @@ namespace MurderBall
                 if (matchState)
                 {
                     matchState = false;
+                    InitTitle();
                     titleState = true;
+
                 }
                 else if (titleState)
                 {
@@ -155,6 +194,7 @@ namespace MurderBall
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            
 
 
             if (matchState) {
@@ -166,7 +206,13 @@ namespace MurderBall
 
         void TitleUpdate(GameTime gameTime)
         {
+            titleUpdateTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             // Title screen stuff heres.
+            if (titleUpdateTimer > titleUpdateInterval)
+            {
+                introTextPos.Y -= 1;
+                titleUpdateTimer = 0.0f;
+            }
 
             // TODO: Add your update logic here
             keyState1 = Keyboard.GetState();
@@ -194,10 +240,7 @@ namespace MurderBall
         /// <param name="gameTime"></param>
         void MatchUpdate(GameTime gameTime)
         {
-           
-
-
-            
+    
             // TODO: Add your update logic here
             keyState1 = Keyboard.GetState();
 
@@ -378,6 +421,7 @@ namespace MurderBall
         {
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
+            spriteBatch.DrawString(titleFont,introTextW,introTextPos,Color.White);
             spriteBatch.End();
 
         }
@@ -413,6 +457,42 @@ namespace MurderBall
         public AudioEngine Audio
         {
             get { return audio; }
+        }
+
+        /// <summary>
+        /// String wrapping class.
+        /// </summary>
+        /// <param name="spriteFont"></param>
+        /// <param name="text"></param>
+        /// <param name="maxLineWidth"></param>
+        /// <returns></returns>
+        public string WrapText(SpriteFont spriteFont, string text, float maxLineWidth)
+        {
+            string[] words = text.Split(' ');
+
+            StringBuilder sb = new StringBuilder();
+
+            float lineWidth = 0f;
+
+            float spaceWidth = spriteFont.MeasureString(" ").X;
+
+            foreach (string word in words)
+            {
+                Vector2 size = spriteFont.MeasureString(word);
+
+                if (lineWidth + size.X < maxLineWidth)
+                {
+                    sb.Append(word + " ");
+                    lineWidth += size.X + spaceWidth;
+                }
+                else
+                {
+                    sb.Append("\n" + word + " ");
+                    lineWidth = size.X + spaceWidth;
+                }
+            }
+
+            return sb.ToString();
         }
 
 
