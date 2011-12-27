@@ -45,3 +45,4 @@ D:\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\GenerateResource.wr
 D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\MurderballTheme.xnb
 D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\BG Music.xwb
 D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\BG Music.xsb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\title.xnb

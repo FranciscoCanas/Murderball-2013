@@ -82,6 +82,15 @@
       <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\MurderballTheme.xnb</Output>
       <Time>2011-12-26T16:05:13.3504657-05:00</Time>
     </Item>
+    <Item>
+      <Source>title.png</Source>
+      <Name>title</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\title.xnb</Output>
+      <Time>2011-12-26T19:39:53.24887-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

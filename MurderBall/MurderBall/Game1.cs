@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,9 +25,12 @@ namespace MurderBall
 
         SoundBank titleSoundBank;
         WaveBank titleWaveBank;
-        
+        Cue titleThemeCue;
 
         public AudioEngine audio = null;
+        
+
+        Texture2D titleSprite;
         
         Boolean titleState = true;
         Boolean matchState = false;
@@ -46,10 +50,16 @@ namespace MurderBall
         public const int iPlayAreaHalf = 400;
 
         Vector2 introTextPos;
-        private const String introText = "In the not-so-distant future, global corporations hold sway and virtually rule all of humanity. The subset of people who have committed crimes against these corporations are forced into massive mega-prisons, and forced into taking part in the brutal blood sports that fuel the entertainment industry. File sharers, music remixers, open source enthusiasts, and all other hated enemies of humanity's de-facto corporate rulers are thrown into the life or death gladiatorial competition known as...";
+        Vector2 titlePos;
+        //float introTimer;
+        private const float introLength = 47.0f;
+
+        private const String introText = "In the not-so-distant future, global corporations hold great sway over all of humanity. The subset of people who have committed crimes against these corporations are forced into massive mega-prisons, and forced into taking part in the brutal blood sports that fuel the entertainment industry. File sharers, music remixers, open source enthusiasts, and all other hated enemies of humanity's de-facto corporate rulers are thrown into the life or death gladiatorial competition known as...";
         private String introTextW;
         private const float titleUpdateInterval = 1.0f / 28.0f;
+        public static readonly Stopwatch watch = new Stopwatch();
         private float titleUpdateTimer = 0.0f;
+        private Boolean titleSongCue = false;
 
 
         KeyboardState prevState1, keyState1;
@@ -64,13 +74,7 @@ namespace MurderBall
             graphics.PreferredBackBufferWidth = ScreenWidth;
             Content.RootDirectory = "Content";
 
-
-           
-
-
-
-           
-            
+     
         }
 
         /// <summary>
@@ -88,6 +92,7 @@ namespace MurderBall
             audio = new AudioEngine("Content\\MurderBallSound.xgs");
             titleWaveBank = new WaveBank(audio, "Content\\BG Music.xwb");
             titleSoundBank = new SoundBank(audio, "Content\\BG Music.xsb");
+            
 
             InitTitle();
          
@@ -101,6 +106,7 @@ namespace MurderBall
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            titleSprite = Content.Load<Texture2D>(@"title");
             
             
 
@@ -110,20 +116,28 @@ namespace MurderBall
         {
             
             //Cue titleMusicCue = titleSoundBank.GetCue("titleTheme");
+            
+            titleThemeCue = titleSoundBank.GetCue("titleTheme");
 
             audio.Update();
             titleFont = Content.Load<SpriteFont>(@"TitleIntro");
             introTextPos = new Vector2(200, 650);
+            titlePos = new Vector2(100, 125);
             titleUpdateTimer = 0.0f;
             introTextW = WrapText(titleFont,introText, 400);
-            titleSoundBank.PlayCue("titleTheme");
+            titleThemeCue.Play();
+            //introTimer = 0.0f;
+            titleSongCue = false;
+            watch.Restart();
+            
 
 
         }
 
         void InitMatch()
         {
-
+            if (titleThemeCue.IsPlaying)
+                titleThemeCue.Stop(AudioStopOptions.AsAuthored);
             // TODO: use this.Content to load your game content here
             player1 = new Player(Content.Load<Texture2D>(@"man1"), 1,this);
             player2 = new Player(Content.Load<Texture2D>(@"man2"), 2,this);
@@ -207,10 +221,15 @@ namespace MurderBall
         void TitleUpdate(GameTime gameTime)
         {
             titleUpdateTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //introTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if ((float)watch.Elapsed.Seconds > introLength)
+                titleSongCue = true;
             // Title screen stuff heres.
             if (titleUpdateTimer > titleUpdateInterval)
             {
                 introTextPos.Y -= 1;
+                
                 titleUpdateTimer = 0.0f;
             }
 
@@ -421,7 +440,17 @@ namespace MurderBall
         {
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-            spriteBatch.DrawString(titleFont,introTextW,introTextPos,Color.White);
+            
+
+            if (!titleSongCue)
+            {
+                spriteBatch.DrawString(titleFont, introTextW, introTextPos, Color.White);
+            }
+            else
+            {
+                spriteBatch.Draw(titleSprite, titlePos, Color.White);
+                
+            }
             spriteBatch.End();
 
         }
