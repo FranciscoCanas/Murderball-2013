@@ -123,8 +123,8 @@ namespace MurderBall
             deltaX = oX - X;
             deltaY = oY - Y;
             theta = (float)Math.Atan2((double)deltaY , (double)deltaX);
-            fYSpeed = (float)(fSpeed * Math.Sin(theta));
-            fXSpeed = (float)(fSpeed * Math.Cos(theta));
+            fYSpeed = (float)((float)thrower.Power * Math.Sin(theta));
+            fXSpeed = (float)((float)thrower.Power * Math.Cos(theta));
            
             // Fix the facing on the angles:
             /*

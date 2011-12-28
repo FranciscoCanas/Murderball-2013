@@ -36,7 +36,7 @@ namespace MurderBall
         Boolean matchState = false;
         Boolean endState = false;
 
-        List<Ball> listBalls; 
+        public List<Ball> listBalls; 
 
         Player player1, player2;
         
@@ -264,19 +264,18 @@ namespace MurderBall
             keyState1 = Keyboard.GetState();
 
 
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             checkExitKey(keyState1, GamePad.GetState(PlayerIndex.One));
 
            
-            KeyInputHandler(Keyboard.GetState(),
-                GamePad.GetState(PlayerIndex.One),
-                player1);
+            player1.KeyInputHandler(keyState1,
+                GamePad.GetState(PlayerIndex.One));
 
-            KeyInputHandler(Keyboard.GetState(),
-                GamePad.GetState(PlayerIndex.One),
-                player2);
+            player2.KeyInputHandler(keyState1,
+                GamePad.GetState(PlayerIndex.Two));
             
             prevState1 = keyState1;
             
@@ -300,128 +299,9 @@ namespace MurderBall
             }
         }
 
-        protected void KeyFireHandler(KeyboardState keys, GamePadState pad, Player player)
-        {
-            if (prevState1 == keyState1)
-                return;
+        
 
-            if (keys.IsKeyDown(player.keyFire))
-            {
-
-                if (player.HasBall)
-                {
-                    player.FireBall();
-
-                    return;
-                }
-                else
-                {
-                    foreach (Ball ball in listBalls)
-                    {
-                        if (ball.Fired)
-                            continue;
-                        if (player.BoundingBox.Intersects(ball.BoundingBox))
-                        {
-                            player.GrabBall(ball);
-
-                            break;
-                        }
-                    }
-
-                }
-
-            }
-        }
-
-        /// <summary>
-        /// Checks player input. Specifically, keyboard input.
-        /// </summary>
-        protected void KeyInputHandler(KeyboardState keys, 
-            GamePadState pad, 
-            Player player)
-        {
-            int LeftBound, RightBound;
-            bool bResetTimer = false;
-
-            KeyFireHandler(keys, pad, player);
-
-            if (keys.IsKeyDown(player.keyRoll))
-            {
-                // Roll call here bitch.
-            }
-
-            if (keys.IsKeyUp(player.keyDown) &&
-                keys.IsKeyUp(player.keyUp) &&
-                keys.IsKeyUp(player.keyLeft) &&
-                keys.IsKeyUp(player.keyRight))
-            {
-                player.Moving = false;
-                return;
-            }
-            
-            if ((keys.IsKeyDown(player.keyUp) || 
-                pad.ThumbSticks.Left.Y > 0)) {
-                    if (player.BoundingBox.Top > rCourt.Top)
-                    {
-                        player.Y -= player.MoveRate;
-                        player.Moving = true;
-                        bResetTimer = true;
-                    }
-            }
-            
-            if ((keys.IsKeyDown(player.keyDown) ||
-                pad.ThumbSticks.Left.Y < 0))
-            {
-                if (player.BoundingBox.Bottom < rCourt.Bottom)
-                {
-                    player.Y += player.MoveRate;
-                    player.Moving = true;
-                    bResetTimer = true;
-                }
-            }
-
-            LeftBound = rCourt.Left;
-            RightBound = rCourt.Right;
-            
-            if (player.PlayerNum == 1)
-            {
-                
-                RightBound = iPlayAreaHalf;
-            }
-            else if (player.PlayerNum ==2)
-            {
-                LeftBound = iPlayAreaHalf;
-               
-            }
-
-            if ((keys.IsKeyDown(player.keyLeft) ||
-                pad.ThumbSticks.Left.X < 0))
-            {
-                if (player.BoundingBox.Left > LeftBound)
-                {
-                    player.X -= player.MoveRate;
-                    player.Moving = true;
-                    bResetTimer = true;
-                }
-            } 
-            if ((keys.IsKeyDown(player.keyRight) ||
-                pad.ThumbSticks.Left.X > 0))
-            {
-                if (player.BoundingBox.Right < RightBound)
-                {
-                    player.X += player.MoveRate;
-                    player.Moving = true;
-                    bResetTimer = true;
-                }
-            }
-            
-            
-            
-            
-            if (bResetTimer)
-                player.VerticalChangeCount = 0f;
-
-        }
+        
 
         protected override void Draw(GameTime gameTime)
         {

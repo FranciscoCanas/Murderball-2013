@@ -16,8 +16,8 @@ Global Settings
     Header File = C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\sound\MurderBallSound.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 4092520062;
-    Last Modified High = 30196752;
+    Last Modified Low = 30196752;
+    Last Modified High = 4092520062;
 
     Category
     {
@@ -214,6 +214,19 @@ Global Settings
         Min = 0.000000;
         Max = 1000000.000000;
     }
+
+    Compression Preset
+    {
+        Name = BG Music;
+        Xbox Format Tag = 357;
+        Target Sample Rate = 48000;
+        XMA Quality = 50;
+        Find Best Quality = 0;
+        High Freq Cut = 0;
+        Loop = 0;
+        PC Format Tag = 2;
+        Samples Per Block = 128;
+    }
 }
 
 Wave Bank
@@ -229,6 +242,8 @@ Wave Bank
     Xbox Bank Last Modified High = 0;
     PC Bank Last Modified Low = 2344741733;
     PC Bank Last Modified High = 30196751;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
     Bank Last Revised Low = 686714928;
     Bank Last Revised High = 30196167;
 
@@ -287,20 +302,18 @@ Wave Bank
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
-    Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 3432440670;
-    PC Bank Last Modified High = 30196753;
-    Bank Last Revised Low = 3392468384;
-    Bank Last Revised High = 30196753;
+    Compression Preset Name = BG Music;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 3223152123;
+    Bank Last Revised High = 30196924;
 
     Wave
     {
         Name = titleTheme;
         File = MurderballTheme.wav;
-        Build Settings Last Modified Low = 2968582329;
-        Build Settings Last Modified High = 30196748;
+        Build Settings Last Modified Low = 3223132122;
+        Build Settings Last Modified High = 30196924;
 
         Cache
         {
@@ -326,8 +339,6 @@ Sound Bank
     Windows File = Win\Ball Cues.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 2346061809;
-    Bank Last Modified High = 30196751;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 
@@ -527,8 +538,6 @@ Sound Bank
     Windows File = Win\BG Music.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Bank Last Modified Low = 4092560065;
-    Bank Last Modified High = 30196752;
     Header Last Modified High = 0;
     Header Last Modified Low = 0;
 

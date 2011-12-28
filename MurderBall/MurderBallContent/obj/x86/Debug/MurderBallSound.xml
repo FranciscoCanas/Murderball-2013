@@ -13,6 +13,8 @@
     Xbox Bank Last Modified High = 0;
     PC Bank Last Modified Low = 2344741733;
     PC Bank Last Modified High = 30196751;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
     Bank Last Revised Low = 686714928;
     Bank Last Revised High = 30196167;
 
@@ -72,20 +74,18 @@
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
-    Compression Preset Name = &lt;none&gt;;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 3432440670;
-    PC Bank Last Modified High = 30196753;
-    Bank Last Revised Low = 3392468384;
-    Bank Last Revised High = 30196753;
+    Compression Preset Name = BG Music;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 3223152123;
+    Bank Last Revised High = 30196924;
 
     Wave
     {
         Name = titleTheme;
         File = MurderballTheme.wav;
-        Build Settings Last Modified Low = 2968582329;
-        Build Settings Last Modified High = 30196748;
+        Build Settings Last Modified Low = 3223132122;
+        Build Settings Last Modified High = 30196924;
 
         Cache
         {
