@@ -8,6 +8,10 @@ Content\32954__hardpcm__chip054.xnb
 Content\TitleIntro.xnb
 Content\MurderballTheme.xnb
 Content\title.xnb
+Content\court.xnb
+Content\splat1.xnb
+Content\splat2.xnb
+Content\splat3.xnb
 Content\MurderBallSound.xgs
 Content\Ball Sounds.xwb
 Content\BG Music.xwb

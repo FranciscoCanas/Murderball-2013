@@ -46,3 +46,7 @@ D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\MurderballT
 D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\BG Music.xwb
 D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\BG Music.xsb
 D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\title.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat1.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat2.xnb
+D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat3.xnb

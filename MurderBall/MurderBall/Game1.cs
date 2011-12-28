@@ -31,23 +31,29 @@ namespace MurderBall
         
 
         Texture2D titleSprite;
+        Texture2D courtSprite;
         
         Boolean titleState = true;
         Boolean matchState = false;
         Boolean endState = false;
 
-        public List<Ball> listBalls; 
+        public List<Ball> listBalls;
+        public List<Vector2> listBallCoords = new List<Vector2>(4);
 
+        public List<Texture2D> listSplats = new List<Texture2D>(3);
+        public List<Vector2> listSplatCoords = new List<Vector2>(3);
+        
         Player player1, player2;
         
         public const int ScreenHeight = 600;
         public const int ScreenWidth = 800;
-        public static Rectangle rCourt = new Rectangle(0,0,ScreenWidth,ScreenHeight);
+        
         public const int iPlayAreaTop = 30;
-        public const int iPlayAreaBottom = 420;
+        public const int iPlayAreaBottom = 400;
         public const int iPlayAreaLeft = 30;
         public const int iPlayAreaRight = 680;
         public const int iPlayAreaHalf = 400;
+        public static Rectangle rCourt = new Rectangle(0, 50, 800, 500);
 
         Vector2 introTextPos;
         Vector2 titlePos;
@@ -107,7 +113,16 @@ namespace MurderBall
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             titleSprite = Content.Load<Texture2D>(@"title");
-            
+
+            listSplats.Add(Content.Load<Texture2D>(@"splat1"));
+            listSplats.Add(Content.Load<Texture2D>(@"splat2"));
+            listSplats.Add(Content.Load<Texture2D>(@"splat3"));
+
+            listBallCoords.Add(new Vector2(200, 200));
+            listBallCoords.Add(new Vector2(600, 200));
+            listBallCoords.Add(new Vector2(200, 400));
+            listBallCoords.Add(new Vector2(600, 400));
+
             
 
         }
@@ -139,6 +154,7 @@ namespace MurderBall
             if (titleThemeCue.IsPlaying)
                 titleThemeCue.Stop(AudioStopOptions.AsAuthored);
             // TODO: use this.Content to load your game content here
+            courtSprite = Content.Load<Texture2D>(@"court");
             player1 = new Player(Content.Load<Texture2D>(@"man1"), 1,this);
             player2 = new Player(Content.Load<Texture2D>(@"man2"), 2,this);
             player1.Foe = player2;
@@ -146,13 +162,14 @@ namespace MurderBall
 
             listBalls = new List<Ball>();
             LoadParticles();
+            PlaceRandomSplats();
 
             for (int i = 0; i < 4; i++)
             {
                 listBalls.Add(new Ball(Content.Load<Texture2D>(@"ball"), this));
 
-                listBalls[i].X = 200 + (i * 100);
-                listBalls[i].Y = 320;
+                listBalls[i].X = (int)listBallCoords[i].X;
+                listBalls[i].Y = (int)listBallCoords[i].Y;
                 listBalls[i].IsActive = true;
 
             }
@@ -345,9 +362,16 @@ namespace MurderBall
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
+
+            spriteBatch.Draw(courtSprite, new Vector2(0, 0), Color.White);
+
             
-            player1.Draw(spriteBatch);
-            player2.Draw(spriteBatch);
+            for (int i = 0; i < 3; i++){
+             
+                spriteBatch.Draw(listSplats[i], listSplatCoords[i] , Color.White);
+
+            }
+            
 
             foreach (Ball ball in listBalls)
             {
@@ -359,13 +383,52 @@ namespace MurderBall
                 }
          
             }
+
+
+            player1.Draw(spriteBatch);
+            player2.Draw(spriteBatch);
+
+            DrawHUD(spriteBatch);
             spriteBatch.End();
            
+        }
+
+        /// <summary>
+        /// Used to draw player's hitpoints, score, etc.
+        /// 
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        private void DrawHUD(SpriteBatch spriteBatch) {
+            spriteBatch.DrawString(titleFont,
+                player1.HitPoints.ToString(),
+                new Vector2(10, 10), Color.Yellow);
+
+            spriteBatch.DrawString(titleFont,
+                player2.HitPoints.ToString(),
+                new Vector2(760, 10), Color.Yellow);
+
         }
 
         public AudioEngine Audio
         {
             get { return audio; }
+        }
+
+        /// <summary>
+        /// Randomly draws some disgustin gross random splats around
+        /// the court.
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        private void PlaceRandomSplats()
+        {
+            Random rand = new Random();
+            Vector2 place = new Vector2(0, 0);
+            foreach (Texture2D splat in listSplats)
+            {
+                listSplatCoords.Add(new Vector2(rand.Next(750), rand.Next(550)));
+
+            }
+
         }
 
         /// <summary>

@@ -24,28 +24,33 @@ namespace MurderBall
         private const int iframeHeight = 52;
 
         // Character stats:
-        private const float fMaxPower = 20.0f;
-        float curPower = fMaxPower / 2.0f;
+        private const float fMaxPower = 25.0f;
+        float curPower = fMaxPower / 5.0f;
         private const int iMaxHitpoints = 100;
         int curHitPoints;
         int iMoveRate = 5; // Player's speed
 
+        // Player states used to keep track of what to animate:
+        Boolean isMoving = false; 
+        Boolean bHasBall = false;
+        Boolean isThrowing = false;
+        Boolean isRolling = false;
+        Boolean isHit = false;
 
+        // Various times to keep track of player state:
+        int timerHit = 0; // Used when player gets hit.
+        private const int timerRecover = 5; // Time it takes for player to get up.
 
+        // Coordinates to keep track of player on screen.
         int iX = 604;
         int iY = 260;
-        int iFacing = 0;
         
         int iScrollRate = 0;
         //int iCurrentFrame = 0;
-        Boolean isMoving = false;
-        Boolean bHasBall = false;
-        Boolean isThrowing = false;
+        
         Ball curBall = null;
         Player opponent;
 
-        
-        
         float fSpeedChangeCount = 0.0f;
         float fSpeedChangeDelay = 0.1f;
         float fVerticalChangeCount = 0.0f;
@@ -93,9 +98,7 @@ namespace MurderBall
                     3,
                     new Vector2(xScale,yScale),
                     new Vector2(xOrigin,yOrigin));
-                /*
-              
-                */
+
                 iX = 604;
                 iY = 260;
                 kUp = Keys.W;
@@ -107,7 +110,7 @@ namespace MurderBall
             }
 
             spriteStanding.IsAnimating = false;
-            spriteStanding.FrameLength = (float)1 / 8.0f;
+            spriteStanding.FrameLength = (float)1 / 8.0f; // FPS for standing frame.
             iPlayer = player;
             this.parent = parent;
             keyState = new KeyboardState();
@@ -134,6 +137,11 @@ namespace MurderBall
             }
         }
 
+        /// <summary>
+        /// Handles grabbing of ball, resets curPower and 
+        /// sets all proper states.
+        /// </summary>
+        /// <param name="ball"></param>
         public void GrabBall(Ball ball)
         {
             curBall = ball;
@@ -142,30 +150,61 @@ namespace MurderBall
             ball.player = this;
         }
 
+        /// <summary>
+        /// Getting hit by ball.  
+        /// Lowers hp, checks for death, changes animation frames.
+        /// </summary>
+        /// <param name="ball"></param>
         public void HitByBall(Ball ball)
         {
             // Do this when player gets hit by ball
-            curHitPoints--;
-
+            curHitPoints -= (int)ball.Power;
+            timerHit = 0;
+            isHit = true;
             if (curHitPoints <= 0)
                 Dies();
         }
 
+        /// <summary>
+        /// Used upon player death.
+        /// Shoot lot's of blood or something.
+        /// </summary>
         public void Dies()
         {
             // Awesomeness here
         }
 
+        /// <summary>
+        /// Player's update method gets run every frame:
+        /// Checks the player's state, and calls the appropriate
+        /// method to handle changes.
+        /// </summary>
+        /// <param name="gametime"></param>
         public void Update(GameTime gametime)
         {
 
-            if (isMoving)
+            if (isMoving) // Player is moving around.
             {
                 spriteStanding.OffsetX = iframeWidth;
                 spriteStanding.IsAnimating = true;
                 spriteStanding.Update(gametime);
             }
-            else
+            else if (isRolling) // Player is rolling around.
+            {
+
+            }
+            else if (isThrowing) // Player is throwing a ball.
+            {
+            }
+            else if (isHit) // Player just got hit.
+            {
+                timerHit += 1;
+                if (timerHit > timerRecover)
+                {
+                    isHit = false;
+                }
+            }
+            else // Just standing there.
             {
                 spriteStanding.Frame = 0;
                 spriteStanding.OffsetX = 0;
@@ -226,12 +265,6 @@ namespace MurderBall
         {
             get { return iY; }
             set { iY = value; }
-        }
-
-        public int Facing
-        {
-            get { return iFacing; }
-            set { iFacing = value; }
         }
 
         public int MoveRate
@@ -299,6 +332,7 @@ namespace MurderBall
 
         /// <summary>
         /// Checks player input. Specifically, keyboard input.
+        /// GamePad input to be done up at a future time.
         /// </summary>
         public void KeyInputHandler(KeyboardState keys, GamePadState pad)
         {
@@ -385,8 +419,6 @@ namespace MurderBall
                    // bResetTimer = true;
                 }
             }
-
-
             prevKeyState = keyState;
         }
         

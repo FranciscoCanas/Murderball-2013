@@ -336,5 +336,13 @@ namespace MurderBall
             get { return vCentre; }
         }
 
+        /// <summary>
+        /// Returns amount of power for ball hitting player.
+        /// </summary>
+        public float Power
+        {
+            get { return Math.Max(Math.Abs((0.75f)*fXSpeed * fYSpeed), 1); }
+        }
+
     }
 }

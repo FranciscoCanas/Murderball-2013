@@ -91,6 +91,42 @@
       <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\title.xnb</Output>
       <Time>2011-12-26T19:39:53.24887-05:00</Time>
     </Item>
+    <Item>
+      <Source>court.png</Source>
+      <Name>court</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court.xnb</Output>
+      <Time>2011-12-28T12:15:55.5282636-05:00</Time>
+    </Item>
+    <Item>
+      <Source>splat1.png</Source>
+      <Name>splat1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat1.xnb</Output>
+      <Time>2011-12-28T12:01:04.8983225-05:00</Time>
+    </Item>
+    <Item>
+      <Source>splat2.png</Source>
+      <Name>splat2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat2.xnb</Output>
+      <Time>2011-12-28T11:59:49.5460126-05:00</Time>
+    </Item>
+    <Item>
+      <Source>splat3.png</Source>
+      <Name>splat3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat3.xnb</Output>
+      <Time>2011-12-28T12:05:03.2259541-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
