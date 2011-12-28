@@ -36,6 +36,7 @@ namespace MurderBall
         Boolean isThrowing = false;
         Boolean isRolling = false;
         Boolean isHit = false;
+        Boolean isDead = false;
 
         // Various times to keep track of player state:
         int timerHit = 0; // Used when player gets hit.
@@ -51,10 +52,7 @@ namespace MurderBall
         Ball curBall = null;
         Player opponent;
 
-        float fSpeedChangeCount = 0.0f;
-        float fSpeedChangeDelay = 0.1f;
-        float fVerticalChangeCount = 0.0f;
-        float fVerticalChangeDelay = 0.01f;
+
         int iPlayer; // Player 1 or Player 2
 
         // Keys:
@@ -171,6 +169,8 @@ namespace MurderBall
         /// </summary>
         public void Dies()
         {
+            isDead = true;
+
             // Awesomeness here
         }
 
@@ -182,8 +182,11 @@ namespace MurderBall
         /// <param name="gametime"></param>
         public void Update(GameTime gametime)
         {
-
-            if (isMoving) // Player is moving around.
+            if (isDead)
+            {
+                // Stuff here when guy dead.
+            }
+            else if (isMoving) // Player is moving around.
             {
                 spriteStanding.OffsetX = iframeWidth;
                 spriteStanding.IsAnimating = true;
@@ -279,30 +282,6 @@ namespace MurderBall
             set { iScrollRate = value; }
         }
 
-     
-        public float SpeedChangeCount
-        {
-            get { return fSpeedChangeCount; }
-            set { fSpeedChangeCount = value; }
-        }
-
-        public float SpeedChangeDelay
-        {
-            get { return fSpeedChangeDelay; }
-            set { fSpeedChangeDelay = value; }
-        }
-
-        public float VerticalChangeCount
-        {
-            get { return fVerticalChangeCount; }
-            set { fVerticalChangeCount = value; }
-        }
-
-        public float VerticalChangeDelay
-        {
-            get { return fVerticalChangeDelay; }
-            set { fVerticalChangeDelay = value; }
-        }
 
         public Boolean HasBall
         {
@@ -338,6 +317,11 @@ namespace MurderBall
         {
             int LeftBound, RightBound;
             keyState = keys;
+
+            if (isDead)
+            {
+                return;
+            }
 
             
             KeyFireHandler(keyState, pad);

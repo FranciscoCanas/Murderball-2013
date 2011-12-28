@@ -12,6 +12,9 @@ Content\court.xnb
 Content\splat1.xnb
 Content\splat2.xnb
 Content\splat3.xnb
+Content\explosion.xnb
+Content\fire.xnb
+Content\smoke.xnb
 Content\MurderBallSound.xgs
 Content\Ball Sounds.xwb
 Content\BG Music.xwb

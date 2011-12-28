@@ -41,7 +41,7 @@ namespace MurderBall
         public List<Vector2> listBallCoords = new List<Vector2>(4);
 
         public List<Texture2D> listSplats = new List<Texture2D>(3);
-        public List<Vector2> listSplatCoords = new List<Vector2>(3);
+        public List<Vector2> listSplatCoords;
         
         Player player1, player2;
         
@@ -365,10 +365,10 @@ namespace MurderBall
 
             spriteBatch.Draw(courtSprite, new Vector2(0, 0), Color.White);
 
-            
-            for (int i = 0; i < 3; i++){
+            // Randomly draw a bunch of splats. You know, for ambience.
+            for (int i = 0; i < listSplatCoords.Count; i++){
              
-                spriteBatch.Draw(listSplats[i], listSplatCoords[i] , Color.White);
+                spriteBatch.Draw(listSplats[i % 3], listSplatCoords[i] , Color.White);
 
             }
             
@@ -378,7 +378,7 @@ namespace MurderBall
                 if (ball.IsActive)
                 {
                     ball.Draw(spriteBatch);
-                    ball.particleSys.Draw(spriteBatch, 1, Vector2.Zero);
+                   
                     
                 }
          
@@ -423,9 +423,14 @@ namespace MurderBall
         {
             Random rand = new Random();
             Vector2 place = new Vector2(0, 0);
-            foreach (Texture2D splat in listSplats)
+            int numSplats = rand.Next(6);
+
+            listSplatCoords = new List<Vector2>(numSplats);
+
+            for (int i = 0; i < numSplats; i++)
             {
-                listSplatCoords.Add(new Vector2(rand.Next(750), rand.Next(550)));
+
+                listSplatCoords.Add(new Vector2(rand.Next(100,700), rand.Next(50,550)));
 
             }
 

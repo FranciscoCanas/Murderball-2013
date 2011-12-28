@@ -24,9 +24,13 @@ namespace MurderBall
         int iFacing = 0;
         float fElapsed = 0f;
         float fUpdateInterval = 0.015f;
+
+        // Ball physics properties
         public float fSpeed = 15.0f;
         public float fSpeedMultiple = 1.0f;
-        public float fSpeedDecayRate = 0.99999f;
+        public float fSpeedDecayRate = 0.9999f;
+
+
         bool isFired;
         int iBounceCount = 0;
         float fLastBounce = 0;
@@ -34,10 +38,11 @@ namespace MurderBall
         Player curPlayer = null;
         Player target = null;
         Player thrower = null;
-        public ParticleSystem particleSys;
+        
         Texture2D particlebase;
         List<Color> lColors;
         Color curColor = Color.White;
+        int colorCount = 0;
         const float xScale = 0.66f;
         const float yScale = 0.66f;
         const int xOrigin = 0;
@@ -69,18 +74,7 @@ namespace MurderBall
             vCentre = new Vector2(iX + (xSize /2), iY + (ySize / 2));
             particlebase = MurderBallGame.particlebase;
 
-            particleSys = new ParticleSystem(vCentre);
-            particleSys.AddEmitter(new Vector2(0.01f, 0.015f),
-                               new Vector2(0, -1), // Start Angle
-                               new Vector2(MathHelper.Pi, -MathHelper.Pi), // Randomized Angle
-                               new Vector2(0.5f, 0.75f),
-                               new Vector2(6, 7), new Vector2(1, 2f),
-                               Color.Indigo, Color.White, Color.CadetBlue, Color.DarkSlateGray,
-                               new Vector2(200, 250), // Start Speed
-                               new Vector2(25, 30), // End Speed
-                               1000, // Num particles
-                               Vector2.Zero, particlebase);
-            
+           
             lColors = new List<Color>(6);
             lColors.Add(Color.Red);
             lColors.Add(Color.Orange);
@@ -146,11 +140,8 @@ namespace MurderBall
             // Update particles:
             if (fLastBounce > fLastBounceInterval)
             {
-                particleSys.On(false);
-                particleSys.Clear();
+               // Bouncy here
             }
-            particleSys.Position = Centre;
-            particleSys.Update(gameTime.ElapsedGameTime.Milliseconds / 1000f);
 
             if (curPlayer != null)
             {
@@ -164,8 +155,9 @@ namespace MurderBall
 
                 if (fElapsed > fUpdateInterval)
                 {
+                    colorCount++;
                     // Change colors:
-                    curColor = lColors[(int)fElapsed % lColors.Count];
+                    curColor = lColors[colorCount % lColors.Count];
                     fElapsed = 0f;
 
                     iX += (int)fXSpeed;
@@ -177,7 +169,7 @@ namespace MurderBall
                     {
                         fYSpeed *= -1;
                         
-                        particleSys.On(true);
+                        
                         HitWall();
                     }
                     
@@ -185,7 +177,7 @@ namespace MurderBall
                     {
                         fYSpeed *= -1;
                         
-                        particleSys.On(true);
+                        
                         HitWall();
                     }
                     
@@ -193,7 +185,7 @@ namespace MurderBall
                     {
                         fXSpeed *= -1;
                         
-                        particleSys.On(true);
+                        
                         HitWall();
                     }
                     
@@ -201,7 +193,7 @@ namespace MurderBall
                     {
                         fXSpeed *= -1;
                         
-                        particleSys.On(true);
+                        
                         HitWall();
                     }
 
@@ -238,7 +230,7 @@ namespace MurderBall
             curPlayer = null;
             thrower = null;
             fSpeedMultiple = 1.0f;
-            particleSys.Clear();
+            
             curColor = Color.White;
         }
 
@@ -281,7 +273,7 @@ namespace MurderBall
             this.fYSpeed *= -1;
             player.HitByBall(this);
             fLastBounce = 0;
-            particleSys.On(true);
+            
              
             
         }

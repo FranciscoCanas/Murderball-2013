@@ -17,7 +17,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\ball.xnb</Output>
-      <Time>2011-12-26T10:32:04.1930933-05:00</Time>
+      <Time>2011-12-28T16:05:00.4304271-05:00</Time>
     </Item>
     <Item>
       <Source>particle_base.jpg</Source>
@@ -126,6 +126,33 @@
       <Options>None</Options>
       <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat3.xnb</Output>
       <Time>2011-12-28T12:05:03.2259541-05:00</Time>
+    </Item>
+    <Item>
+      <Source>explosion.png</Source>
+      <Name>explosion</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\explosion.xnb</Output>
+      <Time>2010-09-20T14:53:14-04:00</Time>
+    </Item>
+    <Item>
+      <Source>fire.png</Source>
+      <Name>fire</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\fire.xnb</Output>
+      <Time>2010-09-20T14:53:14-04:00</Time>
+    </Item>
+    <Item>
+      <Source>smoke.png</Source>
+      <Name>smoke</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\smoke.xnb</Output>
+      <Time>2010-09-20T14:53:14-04:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

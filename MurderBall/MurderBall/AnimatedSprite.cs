@@ -124,17 +124,6 @@ namespace MurderBall
         {
             if (NeedBeginEnd)
                 spriteBatch.Begin();
-/*
-            spriteBatch.Draw(
-                t2dTexture,
-                new Rectangle(
-                  iScreenX + XOffset,
-                  iScreenY + YOffset,
-                  iFrameWidth,
-                  iFrameHeight),
-                GetSourceRect(),
-                col);
-            */
             
             spriteBatch.Draw(t2dTexture, new Vector2(iScreenX + XOffset,
                   iScreenY + YOffset), GetSourceRect(), col,
