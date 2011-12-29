@@ -15,6 +15,7 @@ Content\splat3.xnb
 Content\explosion.xnb
 Content\fire.xnb
 Content\smoke.xnb
+Content\ballshadow.xnb
 Content\MurderBallSound.xgs
 Content\Ball Sounds.xwb
 Content\BG Music.xwb

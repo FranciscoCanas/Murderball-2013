@@ -13,10 +13,16 @@ namespace MurderBall
     {
         MurderBallGame parent;
         AnimatedSprite asBall;
+        Texture2D shadow;
         int iX; // Ball's location
         int iY;
-        float fXSpeed; // Linear velocities
-        float fYSpeed;
+        int iZ; // Ball's height.
+        int shadowOffset = (int)((yScale)*(ySize / 3));
+        public float fXSpeed; // Linear velocities
+        public float fYSpeed;
+        public float fZSpeed; 
+
+        
         const int xSize = 32;
         const int ySize = 32;
         Vector2 vCentre;
@@ -29,6 +35,7 @@ namespace MurderBall
         public float fSpeed = 15.0f;
         public float fSpeedMultiple = 1.0f;
         public float fSpeedDecayRate = 0.9999f;
+        public float fSpeedBounceMult = 0.99f;
 
 
         bool isFired;
@@ -45,8 +52,8 @@ namespace MurderBall
         int colorCount = 0;
         const float xScale = 0.66f;
         const float yScale = 0.66f;
-        const int xOrigin = 0;
-        const int yOrigin = 0;
+        const int xOrigin = (int)(0.5 * xSize);
+        const int yOrigin = (int)(0.5 * ySize);
 
         SoundBank ballSounds;
         WaveBank ballWaves;
@@ -85,6 +92,7 @@ namespace MurderBall
 
             ballWaves = new WaveBank(parent.Audio, "Content\\Ball Sounds.xwb");
             ballSounds = new SoundBank(parent.Audio, "Content\\Ball Cues.xsb");
+            shadow = parent.Content.Load<Texture2D>(@"ballshadow");
 
             
 
@@ -119,6 +127,8 @@ namespace MurderBall
             theta = (float)Math.Atan2((double)deltaY , (double)deltaX);
             fYSpeed = (float)((float)thrower.Power * Math.Sin(theta));
             fXSpeed = (float)((float)thrower.Power * Math.Cos(theta));
+            fZSpeed = 0; // 0 at first, then gravity kicks in.
+            iZ = 24;
            
             // Fix the facing on the angles:
             /*
@@ -162,12 +172,21 @@ namespace MurderBall
 
                     iX += (int)fXSpeed;
                     iY += (int)fYSpeed;
+                    iZ -= (int)fZSpeed;
+                    if (iZ <= 0)
+                        iZ = 0;
+
+                    // Check for player hits:
+                    if (iBounceCount > 0)
+                        CheckHit(thrower);
+
+                    CheckHit(target);
 
                     // If ball hits edge of play area, bounce that shit.
                     
                     if (BoundingBox.Bottom > MurderBallGame.rCourt.Bottom)
                     {
-                        fYSpeed *= -1;
+                        fYSpeed *= -1 * fSpeedBounceMult;
                         
                         
                         HitWall();
@@ -175,7 +194,7 @@ namespace MurderBall
                     
                     if (BoundingBox.Top < MurderBallGame.rCourt.Top)
                     {
-                        fYSpeed *= -1;
+                        fYSpeed *= -1 * fSpeedBounceMult;
                         
                         
                         HitWall();
@@ -183,7 +202,7 @@ namespace MurderBall
                     
                     if (BoundingBox.Left < MurderBallGame.rCourt.Left)
                     {
-                        fXSpeed *= -1;
+                        fXSpeed *= -1 * fSpeedBounceMult;
                         
                         
                         HitWall();
@@ -191,23 +210,34 @@ namespace MurderBall
                     
                     if (BoundingBox.Right > MurderBallGame.rCourt.Right)
                     {
-                        fXSpeed *= -1;
+                        fXSpeed *= -1 * fSpeedBounceMult;
                         
                         
                         HitWall();
+                    }
+
+                    // If we hit the ground:
+                    if (iZ <= 0)
+                    {
+                        fZSpeed *= -1;
                     }
 
                     // Slow the balls down.
                     fSpeedMultiple *= fSpeedDecayRate;
                     fXSpeed *= fSpeedMultiple;
                     fYSpeed *= fSpeedMultiple;
+                    fZSpeed += MurderBallGame.grav;
+
+                    // Rotate:
+                    
+                    //asBall.Rotation += 0.1f * Power;
+                    asBall.Rotation += 0.5f * Power;
+                    float circle = MathHelper.Pi * 2;
+                    asBall.Rotation = asBall.Rotation % circle;
+
    
 
-                    // Check for player hits:
-                    if (iBounceCount > 0)
-                        CheckHit(thrower);
                     
-                    CheckHit(target);
 
                     
                     // If ball stops, set it so it can be picked up.
@@ -230,6 +260,8 @@ namespace MurderBall
             curPlayer = null;
             thrower = null;
             fSpeedMultiple = 1.0f;
+            fZSpeed = 0.0f;
+            iZ = 0;
             
             curColor = Color.White;
         }
@@ -247,8 +279,11 @@ namespace MurderBall
 
         public void Draw(SpriteBatch sb)
         {
-            asBall.Draw(sb, iX, iY, false, curColor);
-            
+            sb.Draw(shadow, new Vector2(iX,iY), null, Color.White,
+               0.0f, new Vector2(xOrigin,yOrigin), 
+               new Vector2(xScale,yScale), SpriteEffects.None, 1);
+           
+            asBall.Draw(sb, iX, iY - iZ - shadowOffset, false, curColor);
                   
         }
 
@@ -269,9 +304,10 @@ namespace MurderBall
             
             Cue cuePlayerHit = ballSounds.GetCue("hitPlayer");
             cuePlayerHit.Play();
+            player.HitByBall(this);
             this.fXSpeed *= -1;
             this.fYSpeed *= -1;
-            player.HitByBall(this);
+            
             fLastBounce = 0;
             
              
@@ -333,7 +369,7 @@ namespace MurderBall
         /// </summary>
         public float Power
         {
-            get { return Math.Max(Math.Abs((0.75f)*fXSpeed * fYSpeed), 1); }
+            get { return Math.Max(Math.Abs((0.5f)*fXSpeed * fYSpeed), 1); }
         }
 
     }

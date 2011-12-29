@@ -154,6 +154,15 @@
       <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\smoke.xnb</Output>
       <Time>2010-09-20T14:53:14-04:00</Time>
     </Item>
+    <Item>
+      <Source>ballshadow.png</Source>
+      <Name>ballshadow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\ballshadow.xnb</Output>
+      <Time>2011-12-29T14:40:41.2029359-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

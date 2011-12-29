@@ -44,6 +44,8 @@ namespace MurderBall
         public List<Vector2> listSplatCoords;
         
         Player player1, player2;
+
+        public const float grav = 0.25f;
         
         public const int ScreenHeight = 600;
         public const int ScreenWidth = 800;

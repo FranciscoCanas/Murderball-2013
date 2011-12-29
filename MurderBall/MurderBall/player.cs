@@ -25,7 +25,8 @@ namespace MurderBall
 
         // Character stats:
         private const float fMaxPower = 25.0f;
-        float curPower = fMaxPower / 5.0f;
+        private float curPower = fMaxPower / 5.0f;
+        float fPowerUpRate = 0.7f;
         private const int iMaxHitpoints = 100;
         int curHitPoints;
         int iMoveRate = 5; // Player's speed
@@ -45,6 +46,10 @@ namespace MurderBall
         // Coordinates to keep track of player on screen.
         int iX = 604;
         int iY = 260;
+        int iZ = 0; // used for height when gettin' thrown around
+        float fXSpeed = 0;
+        float fYSpeed = 0;
+        float fZSpeed = 0; // Speed at which player gets thrown.
         
         int iScrollRate = 0;
         //int iCurrentFrame = 0;
@@ -159,6 +164,9 @@ namespace MurderBall
             curHitPoints -= (int)ball.Power;
             timerHit = 0;
             isHit = true;
+            fZSpeed = ball.fZSpeed / 2;
+            fXSpeed = ball.fXSpeed / 2;
+            fYSpeed = ball.fYSpeed / 2;
             if (curHitPoints <= 0)
                 Dies();
         }
@@ -201,6 +209,9 @@ namespace MurderBall
             }
             else if (isHit) // Player just got hit.
             {
+                iX += (int)fXSpeed;
+                iY += (int)fYSpeed;
+                iZ += (int)fZSpeed;
                 timerHit += 1;
                 if (timerHit > timerRecover)
                 {
@@ -216,7 +227,7 @@ namespace MurderBall
 
         public void Draw(SpriteBatch sb)
         {
-            spriteStanding.Draw(sb, iX, iY, false, Color.White);
+            spriteStanding.Draw(sb, iX, iY - iZ, false, Color.White);
         }
 
         public Rectangle BoundingBox
@@ -420,7 +431,7 @@ namespace MurderBall
                 {
                     // Power up!
                     if (curPower < fMaxPower)
-                        curPower += 0.5f;
+                        curPower += fPowerUpRate;
                         
                     if (!prevKeyState.IsKeyDown(keyFire))
                     {

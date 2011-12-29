@@ -24,7 +24,7 @@ namespace MurderBall
         int iScreenX = 0;
         int iScreenY = 0;
 
-        float Rotation = 0.0f;
+        public float Rotation = 0.0f;
         Vector2 fOrigin;
         Vector2 fScale;
         float Depth = 0.0f;
