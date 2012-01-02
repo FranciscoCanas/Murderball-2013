@@ -17,6 +17,34 @@ namespace MurderBall
         private List<Texture2D> textures;
 
 
+        // Particle settings:
+        public BlendState blendState { get; set; }
+        public Vector2 velocityMax { get; set; }
+        public Vector2 velocityMin { get; set; }
+        public int angleMax { get; set; }
+        public int angleMin { get; set; }
+        public int angularVelocityMax { get; set; }
+        public int angularVelocityMin { get; set; }
+        public float gravity { get; set; }
+
+        public Vector3 ColMax { get; set; }
+        public Vector3 ColMin { get; set; }
+        public int sizeMax { get; set; }
+        public int sizeMin { get; set; }
+        public int TTLMax { get; set; } // time to live
+        public int TTLMin { get; set; } // time to live
+        public Rectangle sourceRect { get; set; }
+        public int maxParticles { get; set; }
+        public int sdMin { get; set; }// Scaling delta min
+        public int sdMax { get; set; } // Scaling delta max
+        public int generateRate { get; set; }
+
+
+        public Boolean isActive { get; set; }
+        public float lifetime { get; set; } // How long these particles go for. If lifetime =0, goes for ever.
+        private double timeElapsed; // Keeps track of how long this dude has been spewing stuff for.
+
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -28,6 +56,26 @@ namespace MurderBall
             this.textures = textures;
             this.particles = new List<Particle>();
             random = new Random();
+
+            // Default values:
+            isActive = true;
+            lifetime = 0;
+            timeElapsed = 0;
+            blendState = new BlendState();
+            blendState.AlphaSourceBlend = Blend.One;
+            blendState.AlphaDestinationBlend = Blend.One;
+            blendState.ColorBlendFunction = BlendFunction.Add;
+            maxParticles = 200;
+            sdMax = 100;
+            sdMin = 100;
+            gravity = 0.0f;
+            generateRate = 10;
+        }
+
+        public void start() {
+            particles.Clear();
+            timeElapsed = 0;
+            isActive = true;
         }
 
         /// <summary>
@@ -36,22 +84,35 @@ namespace MurderBall
         /// <returns></returns>
         private Particle GenerateNewParticle()
         {
+            Vector2 pos = new Vector2();
+            if (sourceRect.IsEmpty)
+            {
+                pos = emitterLocation;
+            }
+            else
+            {
+                pos.X = random.Next(sourceRect.Left, sourceRect.Right);
+                pos.Y = random.Next(sourceRect.Top, sourceRect.Bottom);
+            }
+
             Texture2D texture = textures[random.Next(textures.Count)];
-            Vector2 pos = emitterLocation;
-            Vector2 velocity = new Vector2(
-                1f * (float) (random.NextDouble() * 2 - 1),
-                1f * (float) (random.NextDouble() * 2 - 1));
+            
+            Vector2 velocity = new Vector2((float)random.Next((int)velocityMin.X, (int)velocityMax.X),
+                (float)random.Next((int)velocityMin.Y, (int)velocityMax.Y)              );
 
-            float angle = 0;
-            float angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
+            float angle = (float)random.Next(angleMin, angleMax)/100;
+
+            float angularVelocity = (float)random.Next((int)angularVelocityMin, (int)angularVelocityMax)/100;
+            
             Color color = new Color(
-                (float)random.NextDouble(),
-                (float)random.NextDouble(),
-                (float)random.NextDouble());
+                (float)random.Next((int)ColMin.X, (int)ColMax.X),
+                (float)random.Next((int)ColMin.Y, (int)ColMax.Y),
+                (float)random.Next((int)ColMin.Z, (int)ColMax.Z));
 
-            float size = (float)random.NextDouble();
-            int ttl = 20 + random.Next(40);
+            float size = (float)random.Next(sizeMin, sizeMax)/100;
+            int ttl = random.Next(TTLMin, TTLMax);
 
+            float sizeDelta = (float)random.Next(sdMin, sdMax) / 100;
 
             return new Particle(texture, 
                 pos,
@@ -60,21 +121,33 @@ namespace MurderBall
                 angularVelocity,
                 color,
                 size,
-                ttl);
+                ttl,
+                sizeDelta,
+                gravity);
         }
 
+        
+
         /// <summary>
-        /// Updates all particles
+        /// Updates particle system.
         /// </summary>
-        public void Update()
+        public void Update(GameTime gametime)
         {
-            int total = 10;
+            int total = generateRate;
+            timeElapsed += gametime.ElapsedGameTime.TotalSeconds;
 
-            // Add some new particles
-            for (int i = 0; i < total; i++)
+            if ((lifetime > 0) && (timeElapsed > lifetime))
+                isActive = false;
+            // If active, add particles.
+            if (isActive)
             {
-                particles.Add(GenerateNewParticle());
+                // Add some new particles
+                for (int i = 0; i < total; i++)
+                {
+                    if (particles.Count < maxParticles)
+                        particles.Add(GenerateNewParticle());
 
+                }
             }
 
             // Update and remove old particles
@@ -94,11 +167,14 @@ namespace MurderBall
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            // spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+
             foreach (Particle p in particles) {
                 p.Draw(spriteBatch);
             }
+            spriteBatch.End();
         }
     
     }
 }
+

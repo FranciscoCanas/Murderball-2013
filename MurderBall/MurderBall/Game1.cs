@@ -27,6 +27,10 @@ namespace MurderBall
         WaveBank titleWaveBank;
         Cue titleThemeCue;
 
+        ParticleEngine titleParticles;
+        ParticleEngine titleExplosion;
+        ParticleEngine titleSmoke;
+
         public AudioEngine audio = null;
         
 
@@ -129,11 +133,17 @@ namespace MurderBall
 
         }
 
+        /// <summary>
+        /// Initializes title screen.
+        /// </summary>
         void InitTitle()
         {
-            
-            //Cue titleMusicCue = titleSoundBank.GetCue("titleTheme");
-            
+
+
+            InitTitleParticles();
+
+ 
+
             titleThemeCue = titleSoundBank.GetCue("titleTheme");
 
             audio.Update();
@@ -149,6 +159,17 @@ namespace MurderBall
             
 
 
+        }
+
+        /// <summary>
+        /// Initializes particle effects for title screen.
+        /// </summary>
+        void InitTitleParticles()
+        {
+            ParticleEngineBuilder builder = new ParticleEngineBuilder(this);
+            titleParticles = builder.titleStars();
+            titleExplosion = builder.titleExplosion();
+            titleSmoke = builder.titleExplosionSmoke();
         }
 
         void InitMatch()
@@ -243,13 +264,18 @@ namespace MurderBall
             //introTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if ((float)watch.Elapsed.Seconds > introLength)
+            {
                 titleSongCue = true;
+                titleExplosion.Update(gameTime);
+                titleSmoke.Update(gameTime);
+            }
             // Title screen stuff heres.
             if (titleUpdateTimer > titleUpdateInterval)
             {
                 introTextPos.Y -= 1;
                 
                 titleUpdateTimer = 0.0f;
+                titleParticles.Update(gameTime);
             }
 
             // TODO: Add your update logic here
@@ -335,9 +361,14 @@ namespace MurderBall
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Draws title screen stuffs.
+        /// </summary>
+        /// <param name="gameTime"></param>
         void DrawTitle(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+            titleParticles.Draw(spriteBatch);
             spriteBatch.Begin();
             
 
@@ -347,10 +378,17 @@ namespace MurderBall
             }
             else
             {
+                
                 spriteBatch.Draw(titleSprite, titlePos, Color.White);
+                spriteBatch.End();
+                titleSmoke.Draw(spriteBatch);
+                titleExplosion.Draw(spriteBatch);
+                
+                spriteBatch.Begin();
                 
             }
             spriteBatch.End();
+            
 
         }
 

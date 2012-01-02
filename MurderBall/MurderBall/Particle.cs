@@ -15,12 +15,14 @@ namespace MurderBall
         public Vector2 velocity { get; set; }
         public float angle { get; set; }
         public float angularVelocity { get; set; }
-        public Color color {get; set;}
+        public Color color { get; set; }
         public float size { get; set; }
         public int TTL { get; set; } // time to live
+        public float sizeDelta { get; set; }
+        public float gravity { get; set; }
 
         /// <summary>
-        /// Constructor
+        /// Constructor.
         /// 
         /// </summary>
         /// <param name="text"></param>
@@ -32,7 +34,7 @@ namespace MurderBall
         /// <param name="size"></param>
         /// <param name="ttl"></param>
         public Particle(Texture2D text, Vector2 pos, Vector2 vel,
-            float angle, float angVel, Color col, float size, int ttl)
+            float angle, float angVel, Color col, float size, int ttl, float sizeDelta, float gravity)
         {
             this.texture = text;
             this.position = pos;
@@ -42,6 +44,8 @@ namespace MurderBall
             this.color = col;
             this.size = size;
             this.TTL = ttl;
+            this.sizeDelta = sizeDelta;
+            this.gravity = gravity;
 
         }
 
@@ -53,6 +57,8 @@ namespace MurderBall
             TTL--;
             position += velocity;
             angle += angularVelocity;
+            size *= sizeDelta;
+            velocity = new Vector2(velocity.X, velocity.Y + gravity);
         }
 
         /// <summary>

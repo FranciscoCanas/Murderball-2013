@@ -3,3 +3,5 @@ C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\Murder
 C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBallContent\obj\x86\Debug\MurderBallSound.xml
 D:\repos\Murderball-2013\MurderBall\MurderBallContent\obj\x86\Debug\ResolveAssemblyReference.cache
 D:\repos\Murderball-2013\MurderBall\MurderBallContent\obj\x86\Debug\MurderBallSound.xml
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBallContent\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBallContent\obj\x86\Debug\MurderBallSound.xml

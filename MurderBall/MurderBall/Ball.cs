@@ -60,6 +60,9 @@ namespace MurderBall
         
         Cue cuePlayerHit;
         
+        // Particles
+        ParticleEngine sparks;
+        ParticleEngine fireySparks;
         
 
         public Ball(Texture2D texture, MurderBallGame parent)
@@ -94,8 +97,8 @@ namespace MurderBall
             ballSounds = new SoundBank(parent.Audio, "Content\\Ball Cues.xsb");
             shadow = parent.Content.Load<Texture2D>(@"ballshadow");
 
-            
 
+            initParticles();
         }
  
         public Ball()
@@ -148,9 +151,16 @@ namespace MurderBall
             fLastBounce += fElapsed;
             
             // Update particles:
-            if (fLastBounce > fLastBounceInterval)
+            if (sparks.isActive)
             {
-               // Bouncy here
+                sparks.sourceRect = new Rectangle(this.X - 10, this.Y - 10, 25, 25);
+                sparks.Update(gameTime);
+            }
+            if (fireySparks.isActive)
+            {
+             
+                fireySparks.sourceRect = new Rectangle(this.X - 10, this.Y - 10, 25, 25);
+                fireySparks.Update(gameTime);
             }
 
             if (curPlayer != null)
@@ -234,17 +244,13 @@ namespace MurderBall
                     asBall.Rotation += 0.5f * Power;
                     float circle = MathHelper.Pi * 2;
                     asBall.Rotation = asBall.Rotation % circle;
-
-   
-
-                    
-
                     
                     // If ball stops, set it so it can be picked up.
                     if ((Math.Abs(fXSpeed) < 1) && (Math.Abs(fYSpeed) < 1))
                         BallStops();
 
                     vCentre = new Vector2(iX + (xSize / 2), iY + (ySize / 2));
+
                 }
             }
         }
@@ -284,6 +290,19 @@ namespace MurderBall
                new Vector2(xScale,yScale), SpriteEffects.None, 1);
            
             asBall.Draw(sb, iX, iY - iZ - shadowOffset, false, curColor);
+            // Particles:
+            if (sparks.isActive)
+            {
+                sb.End();
+                sparks.Draw(sb);
+                sb.Begin();
+            }
+            if (fireySparks.isActive)
+            {
+                sb.End();
+                fireySparks.Draw(sb);
+                sb.Begin();
+            }
                   
         }
 
@@ -293,26 +312,38 @@ namespace MurderBall
             cueWallHit.Play();
             iBounceCount += 1;
             fLastBounce = 0;
+            sparks.emitterLocation = new Vector2(this.X, this.Y);
+            sparks.start();
         }
 
+        /// <summary>
+        ///  Run this when we hit a player. Particles, speed changes, etc.
+        /// </summary>
+        /// <param name="player"></param>
         public void HitPlayer(Player player)
         {
             // Do this when ball hits player
-            //isFired = false;
-            //fSpeedDecay *= (fSpeedDecayRate * 0.6f);
-            
-            
             Cue cuePlayerHit = ballSounds.GetCue("hitPlayer");
             cuePlayerHit.Play();
             player.HitByBall(this);
             this.fXSpeed *= -1;
             this.fYSpeed *= -1;
             
-            fLastBounce = 0;
+            fireySparks.start();
+            sparks.start();
+            fLastBounce = 0;        
+        }
+
+        public void initParticles()
+        {
+            ParticleEngineBuilder builder = new ParticleEngineBuilder(parent);
+            sparks = builder.sparks(this);
+            fireySparks = builder.fireSparks(this);
             
-             
             
         }
+
+
 
         public int X
         {

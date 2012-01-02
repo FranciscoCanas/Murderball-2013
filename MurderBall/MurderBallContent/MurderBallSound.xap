@@ -16,8 +16,8 @@ Global Settings
     Header File = C:\Users\Fran\Documents\Visual Studio 2010\Projects\MurderBall\MurderBall\MurderBall\sound\MurderBallSound.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 30196752;
-    Last Modified High = 4092520062;
+    Last Modified Low = 4092520062;
+    Last Modified High = 30196752;
 
     Category
     {
@@ -303,6 +303,10 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = BG Music;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
     Bank Last Revised Low = 3223152123;
@@ -544,7 +548,7 @@ Sound Bank
     Sound
     {
         Name = titleTheme;
-        Volume = -1200;
+        Volume = -10;
         Pitch = 0;
         Priority = 0;
 
