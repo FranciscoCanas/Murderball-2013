@@ -13,6 +13,7 @@ namespace MurderBall
         MurderBallGame parent;
         AnimatedSprite spriteStanding;
         AnimatedSprite spriteRolling;
+        ParticleEngine bloodSpray;
 
         private const float Rotation = 0;
         private const int xScale = 1;
@@ -28,7 +29,7 @@ namespace MurderBall
         private float curPower = fMaxPower / 5.0f;
         float fPowerUpRate = 0.7f;
         private const int iMaxHitpoints = 100;
-        int curHitPoints;
+        float curHitPoints;
         int iMoveRate = 5; // Player's speed
 
         // Player states used to keep track of what to animate:
@@ -38,10 +39,13 @@ namespace MurderBall
         Boolean isRolling = false;
         Boolean isHit = false;
         Boolean isDead = false;
+        public Boolean onFire = false;
 
         // Various times to keep track of player state:
         int timerHit = 0; // Used when player gets hit.
+        float timerFire = 0f; // Used when player gets set on fire. Yes this can happen. This ain't your grandmammy's dodgeball.
         private const int timerRecover = 5; // Time it takes for player to get up.
+        float elapsedtime = 0.0f;
 
         // Coordinates to keep track of player on screen.
         int iX = 604;
@@ -121,8 +125,16 @@ namespace MurderBall
 
             // Set up stats:
             curHitPoints = iMaxHitpoints;
+            InitParticles();
             
             
+        }
+
+        public void InitParticles()
+        {
+            ParticleEngineBuilder builder = new ParticleEngineBuilder(parent);
+            bloodSpray = builder.bloodSprays(this);
+
         }
 
         /// <summary>
@@ -167,6 +179,39 @@ namespace MurderBall
             fZSpeed = ball.fZSpeed / 2;
             fXSpeed = ball.fXSpeed / 2;
             fYSpeed = ball.fYSpeed / 2;
+
+            if (fXSpeed > 0)
+            {
+                if (fYSpeed > 0)
+                {
+                    bloodSpray.velocityMax = new Vector2(fXSpeed,fYSpeed);
+                    bloodSpray.velocityMin = new Vector2(0, 0);
+
+                }
+                else
+                {
+                    bloodSpray.velocityMax = new Vector2(fXSpeed, 0);
+                    bloodSpray.velocityMin = new Vector2(0, fYSpeed);
+                }
+            } else 
+                {
+                    if (fYSpeed > 0)
+                    {
+                        bloodSpray.velocityMax = new Vector2(0, fYSpeed);
+                        bloodSpray.velocityMin = new Vector2(fXSpeed, 0);
+                    }
+                    else
+                    {
+                        bloodSpray.velocityMax = new Vector2(0, 0);
+                        bloodSpray.velocityMin = new Vector2(fXSpeed, fYSpeed);
+                    }
+
+                }
+
+
+            
+            bloodSpray.sourceRect = new Rectangle(X, Y, iframeWidth / 2, iframeHeight / 2);
+            bloodSpray.start();
             if (curHitPoints <= 0)
                 Dies();
         }
@@ -178,7 +223,7 @@ namespace MurderBall
         public void Dies()
         {
             isDead = true;
-
+            parent.courtBot.declareWinner(this.opponent);
             // Awesomeness here
         }
 
@@ -190,9 +235,21 @@ namespace MurderBall
         /// <param name="gametime"></param>
         public void Update(GameTime gametime)
         {
+            elapsedtime += (float)gametime.ElapsedGameTime.TotalSeconds;
+            
             if (isDead)
             {
                 // Stuff here when guy dead.
+            }
+            else if (onFire)
+            {
+                timerFire += (float)gametime.ElapsedGameTime.TotalSeconds;
+                 curHitPoints -= timerFire;
+                if (timerFire > 3.0)
+                {
+                    onFire = false;
+                }
+
             }
             else if (isMoving) // Player is moving around.
             {
@@ -200,6 +257,7 @@ namespace MurderBall
                 spriteStanding.IsAnimating = true;
                 spriteStanding.Update(gametime);
             }
+            
             else if (isRolling) // Player is rolling around.
             {
 
@@ -223,11 +281,23 @@ namespace MurderBall
                 spriteStanding.Frame = 0;
                 spriteStanding.OffsetX = 0;
             }
+
+            if (bloodSpray.isActive)
+            {
+                bloodSpray.sourceRect = new Rectangle(X, Y, iframeWidth / 2, iframeHeight / 2);
+                bloodSpray.Update(gametime);
+            }
         }
 
         public void Draw(SpriteBatch sb)
         {
             spriteStanding.Draw(sb, iX, iY - iZ, false, Color.White);
+            if (bloodSpray.isActive)
+            {
+                sb.End();
+                bloodSpray.Draw(sb);
+                sb.Begin();
+            }
         }
 
         public Rectangle BoundingBox
@@ -301,7 +371,7 @@ namespace MurderBall
 
         public int HitPoints
         {
-            get { return curHitPoints; }
+            get { return (int)curHitPoints; }
             set { curHitPoints = value; }
         }
 
@@ -361,7 +431,7 @@ namespace MurderBall
             if ((keyState.IsKeyDown(keyUp) ||
                 pad.ThumbSticks.Left.Y > 0))
             {
-                if (BoundingBox.Top > MurderBallGame.rCourt.Top)
+                if (BoundingBox.Bottom > MurderBallGame.rCourt.Top)
                 {
                     Y -= MoveRate;
                     Moving = true;
@@ -482,6 +552,15 @@ namespace MurderBall
 
         } // End of fireHandler
 
+
+        /// <summary>
+        /// Returns the name of the player. Ie: "Player 2".
+        /// </summary>
+        /// <returns></returns>
+        public String ToString() {
+            String ret = "Player " + PlayerNum.ToString();
+            return ret;
+        }
 
     } // End of class Player
 }

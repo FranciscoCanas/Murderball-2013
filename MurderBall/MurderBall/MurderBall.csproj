@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="AnimatedSprite.cs" />
     <Compile Include="Ball.cs" />
+    <Compile Include="CourtBot.cs" />
     <Compile Include="MathLib.cs" />
     <Compile Include="Particle.cs" />
     <Compile Include="ParticleEngine.cs" />

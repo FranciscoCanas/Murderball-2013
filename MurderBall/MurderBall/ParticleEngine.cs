@@ -15,12 +15,12 @@ namespace MurderBall
         public Vector2 emitterLocation { get; set; }
         private List<Particle> particles;
         private List<Texture2D> textures;
-
+        public Boolean hasHitBox;
 
         // Particle settings:
-        public BlendState blendState { get; set; }
-        public Vector2 velocityMax { get; set; }
-        public Vector2 velocityMin { get; set; }
+       // public BlendState blendState { get; set; }
+        public Vector2 velocityMax;
+        public Vector2 velocityMin;
         public int angleMax { get; set; }
         public int angleMin { get; set; }
         public int angularVelocityMax { get; set; }
@@ -38,21 +38,32 @@ namespace MurderBall
         public int sdMin { get; set; }// Scaling delta min
         public int sdMax { get; set; } // Scaling delta max
         public int generateRate { get; set; }
+        public float ColAlphaMin { get; set; }
+        public float ColAlphaMax { get; set; }
+        public Vector4 colorVelocity { get; set; }
+        public float startDelay { get; set; }
+        public float produceDelay { get; set; }
+        public SpriteSortMode spMode { get; set; }
+        public BlendState bState { get; set; }
+
 
 
         public Boolean isActive { get; set; }
         public float lifetime { get; set; } // How long these particles go for. If lifetime =0, goes for ever.
         private double timeElapsed; // Keeps track of how long this dude has been spewing stuff for.
+        private double lastProduct; // How long since last spawning of particles.
 
+        private MurderBallGame parent;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="textures"></param>
         /// <param name="location"></param>
-        public ParticleEngine(List<Texture2D> textures, Vector2 location)
+        public ParticleEngine(List<Texture2D> textures, Vector2 location, MurderBallGame parent)
         {
             emitterLocation = location;
+            this.parent = parent;
             this.textures = textures;
             this.particles = new List<Particle>();
             random = new Random();
@@ -61,22 +72,36 @@ namespace MurderBall
             isActive = true;
             lifetime = 0;
             timeElapsed = 0;
-            blendState = new BlendState();
-            blendState.AlphaSourceBlend = Blend.One;
-            blendState.AlphaDestinationBlend = Blend.One;
-            blendState.ColorBlendFunction = BlendFunction.Add;
+            bState = BlendState.Additive;
+            
+            //bState.AlphaSourceBlend = Blend.One;
+            //bState.AlphaDestinationBlend = Blend.One;
+            //bState.ColorBlendFunction = BlendFunction.Add;
+            spMode = SpriteSortMode.Deferred;
             maxParticles = 200;
             sdMax = 100;
             sdMin = 100;
             gravity = 0.0f;
             generateRate = 10;
+            ColAlphaMin = 255.0f;
+            ColAlphaMax = 255.0f;
+            ColMax = new Vector3(255, 255, 255);
+            ColMin = new Vector3(255, 255, 255);
+            startDelay = 0.0f;
+            produceDelay = 0.0f;
+            lastProduct = 0.0f;
+            colorVelocity = new Vector4(0,0,0,0);
+            hasHitBox = false;
+            
         }
 
         public void start() {
             particles.Clear();
             timeElapsed = 0;
+            startDelay = 0.0f;
             isActive = true;
         }
+
 
         /// <summary>
         /// Creates a new random particle
@@ -107,7 +132,8 @@ namespace MurderBall
             Color color = new Color(
                 (float)random.Next((int)ColMin.X, (int)ColMax.X),
                 (float)random.Next((int)ColMin.Y, (int)ColMax.Y),
-                (float)random.Next((int)ColMin.Z, (int)ColMax.Z));
+                (float)random.Next((int)ColMin.Z, (int)ColMax.Z),
+                (float)random.Next((int)ColAlphaMin, (int)ColAlphaMax));
 
             float size = (float)random.Next(sizeMin, sizeMax)/100;
             int ttl = random.Next(TTLMin, TTLMax);
@@ -123,7 +149,8 @@ namespace MurderBall
                 size,
                 ttl,
                 sizeDelta,
-                gravity);
+                gravity, 
+                colorVelocity);
         }
 
         
@@ -133,14 +160,23 @@ namespace MurderBall
         /// </summary>
         public void Update(GameTime gametime)
         {
+            
             int total = generateRate;
             timeElapsed += gametime.ElapsedGameTime.TotalSeconds;
+            lastProduct += gametime.ElapsedGameTime.TotalSeconds;
+            if ((timeElapsed < startDelay))
+                return;
+
 
             if ((lifetime > 0) && (timeElapsed > lifetime))
-                isActive = false;
-            // If active, add particles.
-            if (isActive)
             {
+                isActive = false;
+
+            }
+            // If active, add particles.
+            if (isActive && (lastProduct > produceDelay))
+            {
+                lastProduct = 0.0f;
                 // Add some new particles
                 for (int i = 0; i < total; i++)
                 {
@@ -155,6 +191,28 @@ namespace MurderBall
             {
                 // Update
                 particles[curP].Update();
+                // Check for collisions with players if needed:
+                if (hasHitBox)
+                {
+                    Rectangle hitBox = new Rectangle((int)particles[curP].position.X, 
+                        (int)particles[curP].position.Y, 
+                        (int)(particles[curP].texture.Width * particles[curP].size), 
+                        (int)(particles[curP].texture.Height * particles[curP].size));
+
+                    if (particles[curP].hitBox.Intersects(parent.player1.BoundingBox))
+                    {
+                        // Hit player1 here.
+                        //parent.player1.HitPoints -= 1;
+                        parent.player1.onFire = true;
+                    }
+
+                    if (particles[curP].hitBox.Intersects(parent.player2.BoundingBox))
+                    {
+                        // Hit player2 here.
+                        //parent.player2.HitPoints -= 1;
+                        parent.player2.onFire = true;
+                    }
+                }
 
                 // Remove
                 if (particles[curP].TTL <= 0)
@@ -163,11 +221,14 @@ namespace MurderBall
                     curP--;
                 }
             }
+
+            
         } // End update
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive);
+            
+            spriteBatch.Begin(spMode, bState);
 
             foreach (Particle p in particles) {
                 p.Draw(spriteBatch);

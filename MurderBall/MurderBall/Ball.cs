@@ -41,7 +41,6 @@ namespace MurderBall
         bool isFired;
         int iBounceCount = 0;
         float fLastBounce = 0;
-        float fLastBounceInterval = 0.15f;
         Player curPlayer = null;
         Player target = null;
         Player thrower = null;
@@ -396,11 +395,16 @@ namespace MurderBall
         }
 
         /// <summary>
-        /// Returns amount of power for ball hitting player.
+        /// Returns amount of power for ball hitting player. (Basically, the vector Z from X and Y Speeds)
         /// </summary>
         public float Power
         {
-            get { return Math.Max(Math.Abs((0.5f)*fXSpeed * fYSpeed), 1); }
+            get
+            {
+                return (float)Math.Sqrt((Math.Pow(fXSpeed,2) + 
+                    Math.Pow(fYSpeed, 2)));
+            }
+               
         }
 
     }

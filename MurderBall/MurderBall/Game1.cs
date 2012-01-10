@@ -31,6 +31,11 @@ namespace MurderBall
         ParticleEngine titleExplosion;
         ParticleEngine titleSmoke;
 
+        public CourtBot courtBot;
+
+        
+
+        public List<Ball> listBalls;
         public AudioEngine audio = null;
         
 
@@ -41,25 +46,29 @@ namespace MurderBall
         Boolean matchState = false;
         Boolean endState = false;
 
-        public List<Ball> listBalls;
-        public List<Vector2> listBallCoords = new List<Vector2>(4);
+       
 
         public List<Texture2D> listSplats = new List<Texture2D>(3);
         public List<Vector2> listSplatCoords;
-        
-        Player player1, player2;
+
+        public Player player1 { get; set; }
+        public Player player2 { get; set; }
 
         public const float grav = 0.25f;
         
         public const int ScreenHeight = 600;
         public const int ScreenWidth = 800;
         
-        public const int iPlayAreaTop = 30;
-        public const int iPlayAreaBottom = 400;
-        public const int iPlayAreaLeft = 30;
-        public const int iPlayAreaRight = 680;
+        public const int iPlayAreaTop = 75;
+        public const int iPlayAreaBottom = 590;
+        public const int iPlayAreaLeft = 10;
+        public const int iPlayAreaRight = 785;
         public const int iPlayAreaHalf = 400;
-        public static Rectangle rCourt = new Rectangle(0, 50, 800, 500);
+        public static Rectangle rCourt = new Rectangle(
+            iPlayAreaLeft, 
+            iPlayAreaTop, 
+            iPlayAreaRight - iPlayAreaLeft, 
+            iPlayAreaBottom - iPlayAreaTop);
 
         Vector2 introTextPos;
         Vector2 titlePos;
@@ -72,6 +81,8 @@ namespace MurderBall
         public static readonly Stopwatch watch = new Stopwatch();
         private float titleUpdateTimer = 0.0f;
         private Boolean titleSongCue = false;
+        private Boolean titleDrawCue = false;
+        private float titleDrawTimer = 0.0f;
 
 
         KeyboardState prevState1, keyState1;
@@ -85,6 +96,7 @@ namespace MurderBall
             graphics.PreferredBackBufferHeight = ScreenHeight;
             graphics.PreferredBackBufferWidth = ScreenWidth;
             Content.RootDirectory = "Content";
+
 
      
         }
@@ -124,10 +136,7 @@ namespace MurderBall
             listSplats.Add(Content.Load<Texture2D>(@"splat2"));
             listSplats.Add(Content.Load<Texture2D>(@"splat3"));
 
-            listBallCoords.Add(new Vector2(200, 200));
-            listBallCoords.Add(new Vector2(600, 200));
-            listBallCoords.Add(new Vector2(200, 400));
-            listBallCoords.Add(new Vector2(600, 400));
+        
 
             
 
@@ -142,7 +151,8 @@ namespace MurderBall
 
             InitTitleParticles();
 
- 
+            titleDrawCue = false;
+            titleDrawTimer = 0.0f;
 
             titleThemeCue = titleSoundBank.GetCue("titleTheme");
 
@@ -174,6 +184,10 @@ namespace MurderBall
 
         void InitMatch()
         {
+            listBalls = new List<Ball>();
+            courtBot = new CourtBot(this, listBalls);
+            courtBot.InitMatch();
+
             if (titleThemeCue.IsPlaying)
                 titleThemeCue.Stop(AudioStopOptions.AsAuthored);
             // TODO: use this.Content to load your game content here
@@ -183,19 +197,11 @@ namespace MurderBall
             player1.Foe = player2;
             player2.Foe = player1;
 
-            listBalls = new List<Ball>();
+            
             LoadParticles();
-            PlaceRandomSplats();
+            //PlaceRandomSplats();
 
-            for (int i = 0; i < 4; i++)
-            {
-                listBalls.Add(new Ball(Content.Load<Texture2D>(@"ball"), this));
-
-                listBalls[i].X = (int)listBallCoords[i].X;
-                listBalls[i].Y = (int)listBallCoords[i].Y;
-                listBalls[i].IsActive = true;
-
-            }
+           
         }
 
 
@@ -268,6 +274,11 @@ namespace MurderBall
                 titleSongCue = true;
                 titleExplosion.Update(gameTime);
                 titleSmoke.Update(gameTime);
+                
+                if (titleDrawTimer > 1.0f)
+                    titleDrawCue = true;
+                titleDrawTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             }
             // Title screen stuff heres.
             if (titleUpdateTimer > titleUpdateInterval)
@@ -304,6 +315,7 @@ namespace MurderBall
         /// <param name="gameTime"></param>
         void MatchUpdate(GameTime gameTime)
         {
+            courtBot.Update(gameTime);
     
             // TODO: Add your update logic here
             keyState1 = Keyboard.GetState();
@@ -315,34 +327,30 @@ namespace MurderBall
                 this.Exit();
             checkExitKey(keyState1, GamePad.GetState(PlayerIndex.One));
 
-           
-            player1.KeyInputHandler(keyState1,
-                GamePad.GetState(PlayerIndex.One));
+            // Checks if round has started
+            if (courtBot.hasStarted)
+            {
 
-            player2.KeyInputHandler(keyState1,
-                GamePad.GetState(PlayerIndex.Two));
-            
-            prevState1 = keyState1;
-            
 
-            player1.Update(gameTime);
-            player2.Update(gameTime);
-            UpdateBalls(gameTime);
+                player1.KeyInputHandler(keyState1,
+                    GamePad.GetState(PlayerIndex.One));
+
+                player2.KeyInputHandler(keyState1,
+                    GamePad.GetState(PlayerIndex.Two));
+
+                prevState1 = keyState1;
+
+
+                player1.Update(gameTime);
+                player2.Update(gameTime);
+            }
+
+           // UpdateBalls(gameTime);
 
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// Updates all of the balls.
-        /// </summary>
-        protected void UpdateBalls(GameTime gameTime)
-        {
-            foreach (Ball ball in listBalls)
-            {
-                ball.Update(gameTime, player1, player2);
-                
-            }
-        }
+        
 
         
 
@@ -378,8 +386,9 @@ namespace MurderBall
             }
             else
             {
+                if (titleDrawCue)
+                    spriteBatch.Draw(titleSprite, titlePos, Color.White);
                 
-                spriteBatch.Draw(titleSprite, titlePos, Color.White);
                 spriteBatch.End();
                 titleSmoke.Draw(spriteBatch);
                 titleExplosion.Draw(spriteBatch);
@@ -405,28 +414,13 @@ namespace MurderBall
 
             spriteBatch.Draw(courtSprite, new Vector2(0, 0), Color.White);
 
-            // Randomly draw a bunch of splats. You know, for ambience.
-            for (int i = 0; i < listSplatCoords.Count; i++){
-             
-                spriteBatch.Draw(listSplats[i % 3], listSplatCoords[i] , Color.White);
 
-            }
             
-
-            foreach (Ball ball in listBalls)
-            {
-                if (ball.IsActive)
-                {
-                    ball.Draw(spriteBatch);
-                   
-                    
-                }
-         
-            }
 
 
             player1.Draw(spriteBatch);
             player2.Draw(spriteBatch);
+            courtBot.Draw(spriteBatch);
 
             DrawHUD(spriteBatch);
             spriteBatch.End();

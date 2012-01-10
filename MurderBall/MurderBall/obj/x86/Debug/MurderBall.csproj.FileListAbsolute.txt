@@ -87,3 +87,5 @@ C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\Generate
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall.exe
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall.pdb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\particlecircle.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\CourtBot.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\flame.xnb
