@@ -9,8 +9,6 @@ using Microsoft.Xna.Framework.Audio;
 namespace MurderBall
 {
 
-    
-
     public class CourtBot
     {
         // Constants:
@@ -34,6 +32,7 @@ namespace MurderBall
         private ParticleEngineBuilder builder;
         private ParticleEngine flameGust;
         private ParticleEngine smokeGust;
+        private ParticleEngine laser;
 
         // Flags
         public Boolean hasStarted { get; set; }
@@ -46,8 +45,12 @@ namespace MurderBall
         private float periodFire { get; set; }
         private float timerHealth { get; set; }
         private float periodHealth { get; set; }
+        private float durationHealth { get; set; }
         private float timerRound { get; set; }
         private float timerToStart { get; set; }
+        private float periodLaser { get; set; }
+        private float timerLaser { get; set; }
+        private float durationLaser { get; set; }
 
         // Match parameters:
         private int maxBalls { get; set; }
@@ -56,7 +59,34 @@ namespace MurderBall
         private int curRound { get; set; }
         private float roundLength { get; set; }
 
+        // Sound:
+        SoundBank courtSounds;
+        WaveBank courtWaves;
+        public Cue cueCheers;
+        public Cue bgMusic;
+        public Cue cuePowerup;
+        public Cue cueFlamer;
+        public Cue cueLaser;
+        
+        // First Aid:
+        Texture2D firstAidTexture;
+        public Rectangle aidBox;
+        public Boolean isAidActive;
 
+        // Flamer:
+        Texture2D flamerTexture;
+        public Boolean isFlamerActive;
+        public Rectangle flamerBox;
+        public float timeFlamer;
+
+        // LaserGun:
+        Texture2D laserGunTexture;
+        public Rectangle laserGunBox;
+        public float timeLaserGun;
+        private SpriteEffects laserEffects; 
+        private Boolean isLaserActive;
+        float laserSpeed;
+        
 
         /// <summary>
         /// Constructor for courtBot.
@@ -71,8 +101,10 @@ namespace MurderBall
             // Default parameters:
 
              // Timers and periods:
-            periodFire = 3.0f;
-            periodHealth = 60.0f;
+            periodFire = 10.0f;
+            periodHealth = 12.0f;
+            durationHealth = 3.0f;
+            periodLaser = 5.0f;
             // Match parameters:
             maxBalls = 4;
             minBalls = 4;
@@ -82,6 +114,19 @@ namespace MurderBall
             roundText.Add(round1Text);
             roundText.Add(round2Text);
             roundText.Add(round3Text);
+
+            firstAidTexture = parent.Content.Load<Texture2D>(@"aid");
+            aidBox = new Rectangle(0, 0, 0, 0);
+
+            flamerTexture = parent.Content.Load<Texture2D>(@"flamer");
+            flamerBox = new Rectangle(0, 0, 0, 0);
+
+            laserGunTexture = parent.Content.Load<Texture2D>(@"laserGun");
+            laserGunBox = new Rectangle(0, 0, 32, 32);
+
+
+            
+            
         }
 
         /// <summary>
@@ -97,8 +142,16 @@ namespace MurderBall
             listBallCoords.Add(new Vector2(200, 400));
             listBallCoords.Add(new Vector2(600, 400));
             hasWinner = false;
+
+            courtWaves = new WaveBank(parent.Audio, "Content\\Court Sounds.xwb");
+            courtSounds = new SoundBank(parent.Audio, "Content\\Court Cues.xsb");
+            
+            bgMusic = parent.titleSoundBank.GetCue("dodgeballTheme");
+            
+
             InitParticles();
             InitRound();
+
         }
 
         /// <summary>
@@ -109,9 +162,13 @@ namespace MurderBall
             inIntro = true;
             inCountIn = false;
             timerFire = 0.0f;
+            timerLaser = 0.0f;
             timerHealth = 0.0f;
             timerRound = 0.0f;
             timerToStart = 6.0f;
+            isAidActive = false;
+
+            
 
             for (int i = 0; i < 4; i++)
             {
@@ -122,6 +179,9 @@ namespace MurderBall
                 balls[i].IsActive = true;
 
             }
+            cueCheers = courtSounds.GetCue("cheers");
+            if (!cueCheers.IsPlaying)
+                cueCheers.Play();
         }
 
         /// <summary>
@@ -131,6 +191,7 @@ namespace MurderBall
             builder = new ParticleEngineBuilder(parent);
             flameGust = builder.flameGust();
             smokeGust = builder.smokeGust();
+            laser = builder.laser();
         }
 
         /// <summary>
@@ -139,10 +200,13 @@ namespace MurderBall
         /// <param name="gameTime"></param>
         public void Update(GameTime gameTime)
         {
+            
+
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (hasWinner)
             {
                 return;
+                //StopRound();
             }
 
             if (!hasStarted)
@@ -165,10 +229,15 @@ namespace MurderBall
             }
 
             // From here, we run only once round has started:
+
+            // BG Music:
+            if (!bgMusic.IsPlaying)
+                bgMusic.Play();
             
             timerRound += elapsed;
             timerFire += elapsed;
             timerHealth += elapsed;
+            timerLaser += elapsed;
 
             if (timerRound > this.roundLength)
                 StopRound();
@@ -176,15 +245,75 @@ namespace MurderBall
                 ShootFire();
             if (timerHealth > periodHealth)
                 DropHealth();
+            if (timerLaser > periodLaser)
+                ShootLaser();
+
+            if (isFlamerActive)
+            {
+                timeFlamer += elapsed;
+                if (timeFlamer > 2.0f)
+                {
+                    isFlamerActive = false;
+                    if (cueFlamer.IsPlaying)
+                        cueFlamer.Stop(AudioStopOptions.Immediate);
+                }
+            }
+
+            if (isLaserActive)
+            {
+                timerLaser += elapsed;
+                laserGunBox.Y += (int)laserSpeed;
+                laser.emitterLocation = new Vector2(laser.emitterLocation.X, laser.emitterLocation.Y + (int)laserSpeed);
+
+                if (timerLaser > 3.0f)
+                {
+                    isLaserActive = false;
+                    if (cueLaser.IsPlaying)
+                        cueLaser.Stop(AudioStopOptions.Immediate);
+                    
+                }
+
+            }
+
+            if (isAidActive)
+            {
+                if (timerHealth > durationHealth)
+                {
+                    isAidActive = false;
+                    timerHealth = 0.0f;
+                }
+            }
 
             //if (flameGust.isActive)
             //{
             flameGust.Update(gameTime);
             smokeGust.Update(gameTime);
+            laser.Update(gameTime);
             //}
+            // Check for first aid player grabbba.
+            if (isAidActive)
+            {
+                if (parent.player1.BoundingBox.Intersects(aidBox))
+                {
+                    HealthGrabbed(parent.player1);
+                }
 
+                if (parent.player2.BoundingBox.Intersects(aidBox))
+                {
+                    HealthGrabbed(parent.player2);
+                    
+                }
+
+            }
             
             UpdateBalls(gameTime);
+        }
+
+        protected void HealthGrabbed(Player p)
+        {
+            p.HitPoints = Math.Min(100, p.HitPoints + 20);
+            isAidActive = false;
+            cuePowerup.Play();
         }
 
 
@@ -208,26 +337,41 @@ namespace MurderBall
             
         }
 
+        public void StopSound()
+        {
+            if (bgMusic.IsPlaying)
+                bgMusic.Stop(AudioStopOptions.Immediate);
+            bgMusic.Dispose();
+            
+            if (cueCheers.IsPlaying)
+                cueCheers.Stop(AudioStopOptions.Immediate);
+            cueCheers.Dispose();
+        }
+
         /// <summary>
         /// TODO: Shoot fire randomly.
         /// </summary>
         private void ShootFire()
         {
             timerFire = 0.0f;
-            int y; 
+            int y=0+16; 
             int x = rand.Next(MurderBallGame.rCourt.Left, MurderBallGame.rCourt.Right);
             int ySign = rand.Next(0, 1);
+
+            // Flamer box:
+            flamerBox = new Rectangle(x-16, 0, 32, 32);
+            timeFlamer = 0.0f;
+            isFlamerActive = true;
+
+            cueFlamer = this.courtSounds.GetCue("flamer");
             
-            if (ySign > 0)
-                y = MurderBallGame.rCourt.Bottom;
-            else
-                y = MurderBallGame.rCourt.Top;
+         
 
             flameGust.emitterLocation = new Vector2(x,y);
-            flameGust.velocityMin = new Vector2(0,
+            flameGust.velocityMin = new Vector2(-1,
                 20 * (float)Math.Pow(-1,ySign)
                 );
-            flameGust.velocityMax = new Vector2(0,
+            flameGust.velocityMax = new Vector2(1,
                 20 * (float)Math.Pow(-1, ySign)
                 );
 
@@ -236,6 +380,54 @@ namespace MurderBall
             smokeGust.velocityMin = flameGust.velocityMin;
             flameGust.start();
             smokeGust.start();
+            cueFlamer.Play();
+        }
+
+        private void ShootLaser()
+        {
+            int y = rand.Next(100, 500);
+            int x = rand.Next(2);
+
+            if (y > 300)
+            {
+                laserSpeed = -1;
+                laser.velocityMax = new Vector2(0, laserSpeed);
+                laser.velocityMin = new Vector2(0, laserSpeed);
+            }
+            else
+            {
+                laserSpeed = 1;
+                laser.velocityMax = new Vector2(0, laserSpeed);
+                laser.velocityMin = new Vector2(0, laserSpeed);
+            }
+
+            if (x > 0)
+            {
+                laser.emitterLocation = new Vector2(800, y+16);
+                laser.velocityMax = new Vector2(-25, 0);
+                laser.velocityMin = new Vector2(-50, 0);
+                laserGunBox.X = 800 - 32;
+                laserGunBox.Y = y;
+                laserEffects = SpriteEffects.FlipHorizontally;
+            }
+            else
+            {
+                laser.emitterLocation = new Vector2(0, y+16);
+                laser.velocityMax = new Vector2(50, 0);
+                laser.velocityMin = new Vector2(25, 0);
+                laserGunBox.X = 0;
+                laserGunBox.Y = y;
+                laserEffects = SpriteEffects.None;
+            }
+
+            timerLaser = 0.0f;
+            isLaserActive = true;
+            cueLaser = this.courtSounds.GetCue("laser");
+            cueLaser.Play();
+            laser.start();
+            
+            
+
         }
 
         /// <summary>
@@ -243,7 +435,14 @@ namespace MurderBall
         /// </summary>
         private void DropHealth()
         {
+            int x = rand.Next(50, 750);
+            int y = rand.Next(100, 500);
+
             timerHealth = 0.0f;
+            aidBox = new Rectangle(x,y,firstAidTexture.Width, firstAidTexture.Height);
+            isAidActive = true;
+            cuePowerup = courtSounds.GetCue("powerup");
+
         }
 
         /// <summary>
@@ -252,6 +451,8 @@ namespace MurderBall
         /// <param name="winner">The winner</param>
         public void declareWinner(Player winner)
         {
+            if (bgMusic.IsPlaying)
+                bgMusic.Stop(AudioStopOptions.Immediate);
             hasWinner = true;
             hasStarted = false;
             this.winnerText = "The winner is\n" + winner.ToString();
@@ -287,7 +488,34 @@ namespace MurderBall
             } 
 
             // Do code during match here:
+            if (isAidActive)
+                spriteBatch.Draw(firstAidTexture, aidBox, Color.White);
 
+            
+            if (isFlamerActive)
+                spriteBatch.Draw(flamerTexture, flamerBox, Color.White);
+
+            if (isLaserActive)
+                spriteBatch.Draw(laserGunTexture, 
+                    laserGunBox, 
+                    new Rectangle(0,0,32,32),
+                    Color.White,
+                    0.0f,
+                    new Vector2(0,0),
+                    laserEffects,
+                    0.0f);
+
+            // Particles:
+            //if (flameGust.isActive)
+           // {
+              
+
+            //}
+
+        }
+
+        public void DrawBalls(SpriteBatch spriteBatch)
+        {
             foreach (Ball ball in balls)
             {
                 if (ball.IsActive)
@@ -298,17 +526,26 @@ namespace MurderBall
                 }
 
             }
+        }
+        
+        public void DrawParticles(SpriteBatch spriteBatch)
+        {
+            foreach (Ball ball in balls)
+            {
+                if (ball.IsActive)
+                {
+                    ball.DrawParticles(spriteBatch);
 
-            // Particles:
-            //if (flameGust.isActive)
-           // {
-                spriteBatch.End();
-                flameGust.Draw(spriteBatch);
-                smokeGust.Draw(spriteBatch);
-                spriteBatch.Begin();
 
-            //}
+                }
 
+            }
+
+            
+            smokeGust.Draw(spriteBatch);
+            flameGust.Draw(spriteBatch);
+            laser.Draw(spriteBatch);
+            
         }
     }
 }

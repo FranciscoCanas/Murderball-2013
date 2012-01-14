@@ -89,3 +89,13 @@ C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBa
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\particlecircle.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\CourtBot.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\flame.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\helpScreen.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\Court Sounds.xwb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\Court Cues.xsb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\aid.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\flamer.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\powerup.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\smoke2.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\laser.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\laserGun.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\electric.xnb

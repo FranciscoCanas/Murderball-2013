@@ -23,7 +23,7 @@ namespace MurderBall
         SpriteBatch spriteBatch;
         SpriteFont titleFont;
 
-        SoundBank titleSoundBank;
+        public SoundBank titleSoundBank;
         WaveBank titleWaveBank;
         Cue titleThemeCue;
 
@@ -41,10 +41,12 @@ namespace MurderBall
 
         Texture2D titleSprite;
         Texture2D courtSprite;
+        Texture2D helpScreenSprite;
         
         Boolean titleState = true;
         Boolean matchState = false;
         Boolean endState = false;
+        Boolean helpScreenState = false;
 
        
 
@@ -59,7 +61,7 @@ namespace MurderBall
         public const int ScreenHeight = 600;
         public const int ScreenWidth = 800;
         
-        public const int iPlayAreaTop = 75;
+        public const int iPlayAreaTop = 90;
         public const int iPlayAreaBottom = 590;
         public const int iPlayAreaLeft = 10;
         public const int iPlayAreaRight = 785;
@@ -92,6 +94,7 @@ namespace MurderBall
         {
             graphics = new GraphicsDeviceManager(this);
             // Full screen here:
+            
             graphics.IsFullScreen = false;
             graphics.PreferredBackBufferHeight = ScreenHeight;
             graphics.PreferredBackBufferWidth = ScreenWidth;
@@ -131,6 +134,7 @@ namespace MurderBall
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             titleSprite = Content.Load<Texture2D>(@"title");
+            helpScreenSprite = Content.Load<Texture2D>(@"helpscreen");
 
             listSplats.Add(Content.Load<Texture2D>(@"splat1"));
             listSplats.Add(Content.Load<Texture2D>(@"splat2"));
@@ -234,6 +238,7 @@ namespace MurderBall
                 if (matchState)
                 {
                     matchState = false;
+                    courtBot.StopSound();
                     InitTitle();
                     titleState = true;
 
@@ -259,9 +264,34 @@ namespace MurderBall
 
             if (matchState) {
                 MatchUpdate(gameTime);
-            } else if (titleState) {
+            }
+            else if (helpScreenState)
+            {
+                HelpScreenUpdate(gameTime);
+            }
+            else if (titleState)
+            {
                 TitleUpdate(gameTime);
             }
+        }
+
+        void HelpScreenUpdate(GameTime gameTime)
+        {
+            keyState1 = Keyboard.GetState();
+            if (keyState1 != prevState1)
+            {
+                if (keyState1.IsKeyDown(player1.keyFire) ||
+                    keyState1.IsKeyDown(player2.keyFire))
+                {
+                    helpScreenState = false;
+                    
+                    matchState = true;
+                    
+                }
+            }
+            prevState1 = keyState1;
+
+
         }
 
         void TitleUpdate(GameTime gameTime)
@@ -292,18 +322,19 @@ namespace MurderBall
             // TODO: Add your update logic here
             keyState1 = Keyboard.GetState();
 
+            if (keyState1 != prevState1) {
+                // Allows the game to exit
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                    this.Exit();
+                checkExitKey(keyState1, GamePad.GetState(PlayerIndex.One));
 
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-            checkExitKey(keyState1, GamePad.GetState(PlayerIndex.One));
-
-            if (keyState1.IsKeyDown(Keys.G) || keyState1.IsKeyDown(Keys.L))
-            {
-                this.InitMatch();
-                matchState = true;
-                titleState = false;
+                if (keyState1.IsKeyDown(Keys.G) || keyState1.IsKeyDown(Keys.L))
+                {
+                    this.InitMatch();
+                    helpScreenState = true;
+                    titleState = false;
                 
+                }
             }
             prevState1 = keyState1;
 
@@ -324,20 +355,25 @@ namespace MurderBall
 
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            {
                 this.Exit();
+
+            }
             checkExitKey(keyState1, GamePad.GetState(PlayerIndex.One));
 
             // Checks if round has started
             if (courtBot.hasStarted)
             {
 
-
+                
                 player1.KeyInputHandler(keyState1,
-                    GamePad.GetState(PlayerIndex.One));
+                    GamePad.GetState(PlayerIndex.One),
+                    gameTime);
 
                 player2.KeyInputHandler(keyState1,
-                    GamePad.GetState(PlayerIndex.Two));
-
+                    GamePad.GetState(PlayerIndex.Two),
+                    gameTime);
+                
                 prevState1 = keyState1;
 
 
@@ -362,11 +398,25 @@ namespace MurderBall
             {
                 DrawMatch(gameTime);
             }
+            else if (helpScreenState)
+            {
+                // Help Screen here.
+                DrawHelpScreen(gameTime);
+            }
             else if (titleState)
             {
                 DrawTitle(gameTime);
             }
             base.Draw(gameTime);
+        }
+
+        protected void DrawHelpScreen(GameTime gameTime)
+        {
+            // Draw title screen here:
+            spriteBatch.Begin();
+            spriteBatch.Draw(helpScreenSprite, new Vector2(0, 0), Color.White);
+            spriteBatch.End();
+
         }
 
         /// <summary>
@@ -410,36 +460,50 @@ namespace MurderBall
             GraphicsDevice.Clear(Color.Gray);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
-
-            spriteBatch.Draw(courtSprite, new Vector2(0, 0), Color.White);
-
-
             
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+
+            spriteBatch.Draw(courtSprite, 
+                new Vector2(0,0), 
+                new Rectangle(0,0,800,600),
+                Color.White,0.0f, 
+                new Vector2(0,0),
+                new Vector2(1,1),
+                SpriteEffects.None,
+                1.0f);
 
 
+            courtBot.DrawBalls(spriteBatch);
             player1.Draw(spriteBatch);
             player2.Draw(spriteBatch);
+            
             courtBot.Draw(spriteBatch);
+            
 
             DrawHUD(spriteBatch);
             spriteBatch.End();
+            player1.DrawParticles(spriteBatch);
+            player2.DrawParticles(spriteBatch);
+            courtBot.DrawParticles(spriteBatch);
            
         }
 
         /// <summary>
         /// Used to draw player's hitpoints, score, etc.
-        /// 
+        
         /// </summary>
         /// <param name="spriteBatch"></param>
         private void DrawHUD(SpriteBatch spriteBatch) {
-            spriteBatch.DrawString(titleFont,
-                player1.HitPoints.ToString(),
-                new Vector2(10, 10), Color.Yellow);
+            int p1h = Math.Max(player1.HitPoints, 0);
+            int p2h = Math.Max(player2.HitPoints, 0);
 
             spriteBatch.DrawString(titleFont,
-                player2.HitPoints.ToString(),
-                new Vector2(760, 10), Color.Yellow);
+                p1h.ToString(),
+                new Vector2(10, 10), Color.Yellow ,0.0f, new Vector2(0,0),new Vector2(1,1),SpriteEffects.None, 0);
+
+            spriteBatch.DrawString(titleFont,
+                p2h.ToString(),
+                new Vector2(760, 10), Color.Yellow, 0.0f, new Vector2(0,0),new Vector2(1,1),SpriteEffects.None, 0);
 
         }
 
@@ -468,6 +532,12 @@ namespace MurderBall
 
             }
 
+        }
+
+        private void PlaceBloodSplats(int x, int y)
+        {
+            listSplatCoords.Add(new Vector2(x,y));
+            listSplats.Add(Content.Load<Texture2D>(@"splat1"));
         }
 
         /// <summary>

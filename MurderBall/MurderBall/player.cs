@@ -14,6 +14,9 @@ namespace MurderBall
         AnimatedSprite spriteStanding;
         AnimatedSprite spriteRolling;
         ParticleEngine bloodSpray;
+        ParticleEngine smoke;
+        ParticleEngine burning;
+        ParticleEngine electric;
 
         private const float Rotation = 0;
         private const int xScale = 1;
@@ -27,30 +30,34 @@ namespace MurderBall
         // Character stats:
         private const float fMaxPower = 25.0f;
         private float curPower = fMaxPower / 5.0f;
-        float fPowerUpRate = 0.7f;
+        float fPowerUpRate = 0.25f;
         private const int iMaxHitpoints = 100;
         float curHitPoints;
         int iMoveRate = 5; // Player's speed
 
         // Player states used to keep track of what to animate:
-        Boolean isMoving = false; 
-        Boolean bHasBall = false;
-        Boolean isThrowing = false;
-        Boolean isRolling = false;
-        Boolean isHit = false;
-        Boolean isDead = false;
+        public Boolean isMoving = false; 
+        public Boolean bHasBall = false;
+        public Boolean isThrowing = false;
+        public Boolean isRolling = false;
+        public Boolean isHit = false;
+        public Boolean isDead = false;
+        public Boolean zapped = false;
         public Boolean onFire = false;
 
         // Various times to keep track of player state:
-        int timerHit = 0; // Used when player gets hit.
-        float timerFire = 0f; // Used when player gets set on fire. Yes this can happen. This ain't your grandmammy's dodgeball.
-        private const int timerRecover = 5; // Time it takes for player to get up.
+        private float timeHit = 0; // Used when player gets hit.
+        private float timerFire = 0f; // Used when player gets set on fire. Yes this can happen. This ain't your grandmammy's dodgeball.
+        private const float timerRecover = 2.0f; // Time it takes for player to get up.
         float elapsedtime = 0.0f;
+        private const float timerRoll = 0.5f; // Time it takes for player to recover after rolling.
+        private float timeRolled;
+        private float timerZapped;
 
         // Coordinates to keep track of player on screen.
         int iX = 604;
         int iY = 260;
-        int iZ = 0; // used for height when gettin' thrown around
+        int iZ = 0; // used for height when gettin' thrown around.
         float fXSpeed = 0;
         float fYSpeed = 0;
         float fZSpeed = 0; // Speed at which player gets thrown.
@@ -92,8 +99,14 @@ namespace MurderBall
                 /*
               
                 */
-                iX = 240;
+                iX = 200;
                 iY = 260;
+                kUp = Keys.W;
+                kDown = Keys.S;
+                kLeft = Keys.A;
+                kRight = Keys.D;
+                kFire = Keys.G;
+                kRoll = Keys.F;
             }
             if (player == 2)
             {
@@ -106,14 +119,9 @@ namespace MurderBall
                     new Vector2(xScale,yScale),
                     new Vector2(xOrigin,yOrigin));
 
-                iX = 604;
+                iX = 600;
                 iY = 260;
-                kUp = Keys.W;
-                kDown = Keys.S;
-                kLeft = Keys.A;
-                kRight = Keys.D;
-                kFire = Keys.G;
-                kRoll = Keys.F;
+                
             }
 
             spriteStanding.IsAnimating = false;
@@ -134,6 +142,9 @@ namespace MurderBall
         {
             ParticleEngineBuilder builder = new ParticleEngineBuilder(parent);
             bloodSpray = builder.bloodSprays(this);
+            smoke = builder.smoke();
+            burning = builder.fireSparks();
+            electric = builder.electric();
 
         }
 
@@ -174,11 +185,14 @@ namespace MurderBall
         {
             // Do this when player gets hit by ball
             curHitPoints -= (int)ball.Power;
-            timerHit = 0;
+            timeHit = 0;
             isHit = true;
-            fZSpeed = ball.fZSpeed / 2;
-            fXSpeed = ball.fXSpeed / 2;
-            fYSpeed = ball.fYSpeed / 2;
+            isMoving = false;
+            isRolling = false;
+
+            fZSpeed = -10.0f;
+            fXSpeed = ball.fXSpeed;
+            fYSpeed = ball.fYSpeed;
 
             if (fXSpeed > 0)
             {
@@ -209,11 +223,31 @@ namespace MurderBall
                 }
 
 
-            
-            bloodSpray.sourceRect = new Rectangle(X, Y, iframeWidth / 2, iframeHeight / 2);
+            bloodSpray.emitterLocation = new Vector2(X + iframeWidth/ 2 ,Y + iframeHeight / 2);
+            //bloodSpray.sourceRect = new Rectangle(X, Y, iframeWidth / 2, iframeHeight / 2);
             bloodSpray.start();
             if (curHitPoints <= 0)
                 Dies();
+        }
+
+        public void SetOnFire()
+        {
+            onFire = true;
+            timerFire = 0f;
+            if (!smoke.isActive)
+                smoke.start();
+            if (!burning.isActive)
+                burning.start();
+        }
+
+        public void Zap()
+        {
+            zapped = true;
+            timerZapped = 0f;
+            if (!electric.isActive)
+                electric.start();
+            
+
         }
 
         /// <summary>
@@ -236,48 +270,90 @@ namespace MurderBall
         public void Update(GameTime gametime)
         {
             elapsedtime += (float)gametime.ElapsedGameTime.TotalSeconds;
-            
+
+            Rectangle plocation = BoundingBox;
             if (isDead)
             {
+                spriteStanding.OffsetY = 0;
+                spriteStanding.OffsetX = 0;
                 // Stuff here when guy dead.
             }
-            else if (onFire)
+            else if (zapped)
             {
-                timerFire += (float)gametime.ElapsedGameTime.TotalSeconds;
-                 curHitPoints -= timerFire;
-                if (timerFire > 3.0)
+                timerZapped += (float)gametime.ElapsedGameTime.TotalSeconds;
+                curHitPoints -= 0.1f;
+                electric.sourceRect = new Rectangle(plocation.X + 16, plocation.Y + 16, 16,16);
+                // No movements allowed.
+                if (timerZapped > 2.0f)
                 {
-                    onFire = false;
+                    zapped = false;
+                    electric.isActive = false;
                 }
 
             }
+            else if (onFire)
+            {
+
+                timerFire += (float)gametime.ElapsedGameTime.TotalSeconds;
+                curHitPoints -= (float)gametime.ElapsedGameTime.TotalSeconds * 2;
+                
+                smoke.sourceRect = plocation;
+                burning.sourceRect = plocation;
+
+
+                if (timerFire > 3.0)
+                {
+                    onFire = false;
+                    smoke.isActive = false;
+                    burning.isActive = false;
+                }
+
+            }
+            else if (isRolling) // Player is rolling around.
+            {
+                spriteStanding.OffsetY = 0;
+                spriteStanding.OffsetX = 0;
+                onFire = false;
+                timeRolled += elapsedtime;
+                if (timeRolled > timerRoll)
+                {
+                    isRolling = false;
+
+                }
+            }
+            else if (isThrowing) // Player is throwing a ball.
+            {
+                spriteStanding.OffsetY = 0;
+                spriteStanding.OffsetX = 0;
+            }
+            else if (isHit) // Player just got hit.
+            {
+                spriteStanding.OffsetY = 0;
+                spriteStanding.OffsetX = 0;
+
+                iX += (int)fXSpeed;
+                iY += (int)fYSpeed;
+                iZ += (int)fZSpeed;
+                fZSpeed = Math.Min(fZSpeed + MurderBallGame.grav, 0);
+
+                timeHit += elapsedtime;
+                if (timeHit > timerRecover)
+                {
+                    isHit = false;
+                    iZ = 0;
+                }
+            }
             else if (isMoving) // Player is moving around.
             {
+
+                spriteStanding.OffsetY = 0;
                 spriteStanding.OffsetX = iframeWidth;
                 spriteStanding.IsAnimating = true;
                 spriteStanding.Update(gametime);
             }
-            
-            else if (isRolling) // Player is rolling around.
-            {
-
-            }
-            else if (isThrowing) // Player is throwing a ball.
-            {
-            }
-            else if (isHit) // Player just got hit.
-            {
-                iX += (int)fXSpeed;
-                iY += (int)fYSpeed;
-                iZ += (int)fZSpeed;
-                timerHit += 1;
-                if (timerHit > timerRecover)
-                {
-                    isHit = false;
-                }
-            }
             else // Just standing there.
             {
+                spriteStanding.OffsetY = 0;
                 spriteStanding.Frame = 0;
                 spriteStanding.OffsetX = 0;
             }
@@ -287,17 +363,36 @@ namespace MurderBall
                 bloodSpray.sourceRect = new Rectangle(X, Y, iframeWidth / 2, iframeHeight / 2);
                 bloodSpray.Update(gametime);
             }
+
+            smoke.Update(gametime);
+            burning.Update(gametime);
+            electric.Update(gametime);
         }
 
         public void Draw(SpriteBatch sb)
         {
-            spriteStanding.Draw(sb, iX, iY - iZ, false, Color.White);
+            spriteStanding.Draw(sb, iX, iY - iZ, false, Color.White, GetDepth);
+           
+            //if (smoke.isActive)
+           // {
+           // sb.End();
+            
+           // sb.Begin();
+            //}
+        }
+
+        public void DrawParticles(SpriteBatch sb)
+        {
             if (bloodSpray.isActive)
             {
-                sb.End();
+                
                 bloodSpray.Draw(sb);
-                sb.Begin();
+                
             }
+            smoke.Draw(sb);
+            burning.Draw(sb);
+            electric.Draw(sb);
+
         }
 
         public Rectangle BoundingBox
@@ -390,16 +485,21 @@ namespace MurderBall
             get { return iPlayer; }
         }
 
+        public float GetDepth
+        {
+            get { return (800 - (float)(Y+(iframeHeight * 1.5)))/800; }
+        }
+
         /// <summary>
         /// Checks player input. Specifically, keyboard input.
         /// GamePad input to be done up at a future time.
         /// </summary>
-        public void KeyInputHandler(KeyboardState keys, GamePadState pad)
+        public void KeyInputHandler(KeyboardState keys, GamePadState pad, GameTime gameTime)
         {
             int LeftBound, RightBound;
             keyState = keys;
 
-            if (isDead)
+            if (isDead || isHit || isRolling || zapped )
             {
                 return;
             }
@@ -416,6 +516,9 @@ namespace MurderBall
             if (keyState.IsKeyDown(keyRoll))
             {
                 // Roll call here bitch.
+                isRolling = true;
+                timeRolled = 0.0f;
+                
             }
 
             if (keyState.IsKeyUp(keyDown) &&
@@ -500,8 +603,16 @@ namespace MurderBall
                 if (keyState.IsKeyDown(keyFire))
                 {
                     // Power up!
-                    if (curPower < fMaxPower)
+                    if (curPower < fMaxPower) 
+                    {
                         curPower += fPowerUpRate;
+                        if (curPower >= fMaxPower)
+                        {
+                            curBall.isPowered = true;
+                            curPower = fMaxPower;
+                        }
+                    }
+                    
                         
                     if (!prevKeyState.IsKeyDown(keyFire))
                     {
@@ -535,11 +646,16 @@ namespace MurderBall
                 {
                     // Player just pressed and released fire key
                     // Get ball, if available.
+                    Rectangle GrabBox = new Rectangle(BoundingBox.X, 
+                        BoundingBox.Y + (iframeHeight), 
+                        BoundingBox.Width, 
+                        BoundingBox.Height /2);
+
                     foreach (Ball ball in parent.listBalls)
                     {
                         if (ball.Fired)
                             continue;
-                        if (BoundingBox.Intersects(ball.BoundingBox))
+                        if (GrabBox.Intersects(ball.BoundingBox))
                         {
                             GrabBall(ball);
                             break;

@@ -14,8 +14,8 @@ namespace MurderBall
         float fFrameRate = (float)1 / 12.0f;
         float fElapsed = 0.0f;
 
-        int iFrameOffsetX = 0;
-        int iFrameOffsetY = 0;
+        public int iFrameOffsetX = 0;
+        public int iFrameOffsetY = 0;
         int iFrameWidth = 32;
         int iFrameHeight = 32;
 
@@ -64,6 +64,10 @@ namespace MurderBall
         public int OffsetX
         {
             set { iFrameOffsetX = value; }
+        }
+        public int OffsetY
+        {
+            set { iFrameOffsetY = value; }
         }
 
         public AnimatedSprite(
@@ -120,22 +124,22 @@ namespace MurderBall
           int XOffset,
           int YOffset,
           bool NeedBeginEnd, 
-          Color col)
+          Color col, float depth)
         {
             if (NeedBeginEnd)
                 spriteBatch.Begin();
             
             spriteBatch.Draw(t2dTexture, new Vector2(iScreenX + XOffset,
                   iScreenY + YOffset), GetSourceRect(), col,
-               Rotation, fOrigin, fScale, SpriteEffects.None, Depth);
+               Rotation, fOrigin, fScale, SpriteEffects.None, depth);
             
             if (NeedBeginEnd)
                 spriteBatch.End();
         }
 
-        public void Draw(SpriteBatch spriteBatch, int XOffset, int YOffset, Color col)
+        public void Draw(SpriteBatch spriteBatch, int XOffset, int YOffset, Color col, float depth)
         {
-            Draw(spriteBatch, XOffset, YOffset, true, col);
+            Draw(spriteBatch, XOffset, YOffset, true, col, depth);
         }
 
     }// End of AnimatedSprite Class

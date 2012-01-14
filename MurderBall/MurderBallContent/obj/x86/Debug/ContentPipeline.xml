@@ -35,7 +35,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man1.xnb</Output>
-      <Time>2011-12-25T12:25:42.5156955-05:00</Time>
+      <Time>2012-01-13T19:37:08.2233425-05:00</Time>
     </Item>
     <Item>
       <Source>man2.png</Source>
@@ -62,7 +62,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court.xnb</Output>
-      <Time>2011-12-28T18:17:06.9004519-05:00</Time>
+      <Time>2012-01-14T12:34:56.5997649-05:00</Time>
     </Item>
     <Item>
       <Source>splat2.png</Source>
@@ -125,7 +125,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\MurderballTheme.xnb</Output>
-      <Time>2011-12-28T18:07:38.6245634-05:00</Time>
+      <Time>2012-01-12T13:28:54.5264264-05:00</Time>
     </Item>
     <Item>
       <Source>28917__junggle__btn107.wav</Source>
@@ -189,6 +189,78 @@
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\flame.xnb</Output>
       <Time>2012-01-10T13:05:36.2205108-05:00</Time>
+    </Item>
+    <Item>
+      <Source>aid.png</Source>
+      <Name>aid</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\aid.xnb</Output>
+      <Time>2012-01-12T15:15:43.7250115-05:00</Time>
+    </Item>
+    <Item>
+      <Source>helpscreen.jpg</Source>
+      <Name>helpscreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\helpscreen.xnb</Output>
+      <Time>2012-01-12T15:27:24.1340727-05:00</Time>
+    </Item>
+    <Item>
+      <Source>flamer.png</Source>
+      <Name>flamer</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\flamer.xnb</Output>
+      <Time>2012-01-13T11:55:45.7651566-05:00</Time>
+    </Item>
+    <Item>
+      <Source>powerup.wav</Source>
+      <Name>powerup</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\powerup.xnb</Output>
+      <Time>2012-01-13T12:10:17.2666454-05:00</Time>
+    </Item>
+    <Item>
+      <Source>smoke2.png</Source>
+      <Name>smoke2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\smoke2.xnb</Output>
+      <Time>2012-01-13T16:40:56.88072-05:00</Time>
+    </Item>
+    <Item>
+      <Source>laser.png</Source>
+      <Name>laser</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\laser.xnb</Output>
+      <Time>2012-01-13T18:47:16.505821-05:00</Time>
+    </Item>
+    <Item>
+      <Source>laserGun.png</Source>
+      <Name>laserGun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\laserGun.xnb</Output>
+      <Time>2012-01-14T12:43:00.0184149-05:00</Time>
+    </Item>
+    <Item>
+      <Source>electric.png</Source>
+      <Name>electric</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\electric.xnb</Output>
+      <Time>2012-01-14T13:10:00.1330802-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

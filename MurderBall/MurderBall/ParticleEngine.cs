@@ -54,6 +54,7 @@ namespace MurderBall
         private double lastProduct; // How long since last spawning of particles.
 
         private MurderBallGame parent;
+        public int HitType { get; set; }
 
         /// <summary>
         /// Constructor
@@ -74,9 +75,6 @@ namespace MurderBall
             timeElapsed = 0;
             bState = BlendState.Additive;
             
-            //bState.AlphaSourceBlend = Blend.One;
-            //bState.AlphaDestinationBlend = Blend.One;
-            //bState.ColorBlendFunction = BlendFunction.Add;
             spMode = SpriteSortMode.Deferred;
             maxParticles = 200;
             sdMax = 100;
@@ -102,6 +100,12 @@ namespace MurderBall
             isActive = true;
         }
 
+        public void stop()
+        {
+            isActive = false;
+
+        }
+
 
         /// <summary>
         /// Creates a new random particle
@@ -125,7 +129,7 @@ namespace MurderBall
             Vector2 velocity = new Vector2((float)random.Next((int)velocityMin.X, (int)velocityMax.X),
                 (float)random.Next((int)velocityMin.Y, (int)velocityMax.Y)              );
 
-            float angle = (float)random.Next(angleMin, angleMax)/100;
+            float angle = (float)((random.Next(angleMin, angleMax)/360)*(2*Math.PI));
 
             float angularVelocity = (float)random.Next((int)angularVelocityMin, (int)angularVelocityMax)/100;
             
@@ -194,23 +198,37 @@ namespace MurderBall
                 // Check for collisions with players if needed:
                 if (hasHitBox)
                 {
-                    Rectangle hitBox = new Rectangle((int)particles[curP].position.X, 
+                    /*Rectangle hitBox = new Rectangle((int)particles[curP].position.X, 
                         (int)particles[curP].position.Y, 
                         (int)(particles[curP].texture.Width * particles[curP].size), 
-                        (int)(particles[curP].texture.Height * particles[curP].size));
+                        (int)(particles[curP].texture.Height * particles[curP].size));*/
 
-                    if (particles[curP].hitBox.Intersects(parent.player1.BoundingBox))
+                    if (particles[curP].getHitBox().Intersects(parent.player1.BoundingBox))
                     {
                         // Hit player1 here.
                         //parent.player1.HitPoints -= 1;
-                        parent.player1.onFire = true;
+                        if (!parent.player1.isRolling)
+                        {
+                            if (HitType == 0)
+                                parent.player1.SetOnFire();
+                            else if (HitType == 1)
+                                parent.player1.Zap();
+
+                        }
                     }
 
-                    if (particles[curP].hitBox.Intersects(parent.player2.BoundingBox))
+                    if (particles[curP].getHitBox().Intersects(parent.player2.BoundingBox))
                     {
                         // Hit player2 here.
                         //parent.player2.HitPoints -= 1;
-                        parent.player2.onFire = true;
+                        if (!parent.player2.isRolling)
+                        {
+                            if (HitType == 0)
+                                parent.player2.SetOnFire();
+                            else if (HitType == 1)
+                                parent.player2.Zap();
+
+                        }
                     }
                 }
 

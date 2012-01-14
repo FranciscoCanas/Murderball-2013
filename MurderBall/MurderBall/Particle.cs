@@ -88,5 +88,14 @@ namespace MurderBall
                 origin, size, SpriteEffects.None, 0f);
         }
 
+        public Rectangle getHitBox()
+        {
+            Rectangle r = new Rectangle((int)position.X, 
+                (int)position.Y, 
+                (int)(texture.Width * size / 2), 
+                (int)(texture.Height * size / 2));
+            return r;
+        }
+
     }
 }
