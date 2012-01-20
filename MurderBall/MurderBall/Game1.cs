@@ -26,6 +26,7 @@ namespace MurderBall
         public SoundBank titleSoundBank;
         WaveBank titleWaveBank;
         Cue titleThemeCue;
+        Cue creditsThemeCue;
 
         ParticleEngine titleParticles;
         ParticleEngine titleExplosion;
@@ -36,21 +37,25 @@ namespace MurderBall
         
 
         public List<Ball> listBalls;
+        public List<Texture2D> spriteList = new List<Texture2D>();
         public AudioEngine audio = null;
         
 
         Texture2D titleSprite;
         Texture2D courtSprite;
         Texture2D helpScreenSprite;
+        AnimatedSprite titleSpriteAnimation;
         
         Boolean titleState = true;
         Boolean matchState = false;
-        Boolean endState = false;
+        Boolean creditsState = false;
+       
         Boolean helpScreenState = false;
 
        
 
         public List<Texture2D> listSplats = new List<Texture2D>(3);
+        
         public List<Vector2> listSplatCoords;
 
         public Player player1 { get; set; }
@@ -73,19 +78,54 @@ namespace MurderBall
             iPlayAreaBottom - iPlayAreaTop);
 
         Vector2 introTextPos;
+        
         Vector2 titlePos;
+        Vector2 creditsTextPos;
         //float introTimer;
         private const float introLength = 47.0f;
 
-        private const String introText = "In the not-so-distant future, global corporations hold great sway over all of humanity. The subset of people who have committed crimes against these corporations are forced into massive mega-prisons, and forced into taking part in the brutal blood sports that fuel the entertainment industry. File sharers, music remixers, open source enthusiasts, and all other hated enemies of humanity's de-facto corporate rulers are thrown into the life or death gladiatorial competition known as...";
+        private const String introText = "In the not-so-distant future, global corporations hold great sway over all of humanity. The subset of people who commit crimes against these corporations are sent to massive megaprisons, and forced to take part in the brutal blood sports that fuel the entertainment industry. File sharers, music remixers, open source enthusiasts, and all other hated enemies of humanity's de-facto corporate rulers are thrown into the life or death gladiatorial competition known as...";
+        /*private const String creditsText = "Blue guy was shived to death in his ultra-cell 3 days after the filming of this game. He did not recover.\n" +
+            "Red guy escaped from robo-prison and made his way to the Bahamas. He is now a lawyer.\n" +
+            "Green guy ate a bad sandwich and died.\n" +
+            "Yellow guy starred in his own movie about the Murderball industry. He's a famous celebrity today.\n" +
+            " The End."*/
+        private const String creditsText = "Murderball 2013\n\n\n\n\n\n\n" +
+            "Bit Manipulation and Reasoning:\n"+
+            "Francisco\n\n\n\n\n"+
+            "Neon Visual Direction:\n"+
+            "Adrian\n\n\n\n\n"+
+            "Apocalyptic Historic Revisioning:\n" +
+            "Francisco\n\n\n\n\n" +
+            "Pictographical Manufacturing:\n" +
+            "Adrian\n\n\n\n\n" +
+            "Pyrotechnical Fabrications\n" +
+            "Francisco\n\n\n\n\n" +
+            "2-Dimensional Image Kinetics:\n" +
+            "Adrian\n\n\n\n\n" +
+            "Synthetic Aural Constructions:\n"+
+            "Francisco\n\n\n\n\n" +
+            "Catering:\n" +
+            "Adrian\n\n\n\n\n" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe End\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
+            "...or is it?";
         private String introTextW;
+        private String creditsTextW;
         private const float titleUpdateInterval = 1.0f / 28.0f;
         public static readonly Stopwatch watch = new Stopwatch();
         private float titleUpdateTimer = 0.0f;
         private Boolean titleSongCue = false;
         private Boolean titleDrawCue = false;
+        private Boolean cueOrIsIt = false;
         private float titleDrawTimer = 0.0f;
-
+        private float pressKeyTimer = 0.0f;
+        private float creditsTimer = 0.0f;
 
         KeyboardState prevState1, keyState1;
         public static Texture2D particlebase;
@@ -135,6 +175,7 @@ namespace MurderBall
             spriteBatch = new SpriteBatch(GraphicsDevice);
             titleSprite = Content.Load<Texture2D>(@"title");
             helpScreenSprite = Content.Load<Texture2D>(@"helpscreen");
+            //titleSpriteAnimation = new AnimatedSprite(Content.Load<Texture2D>(@"transparentintro"), 0, 0, 270, 270, 72, new Vector2(1, 1), new Vector2(0, 0));
 
             listSplats.Add(Content.Load<Texture2D>(@"splat1"));
             listSplats.Add(Content.Load<Texture2D>(@"splat2"));
@@ -159,20 +200,42 @@ namespace MurderBall
             titleDrawTimer = 0.0f;
 
             titleThemeCue = titleSoundBank.GetCue("titleTheme");
+            
 
             audio.Update();
             titleFont = Content.Load<SpriteFont>(@"TitleIntro");
             introTextPos = new Vector2(200, 650);
-            titlePos = new Vector2(100, 125);
+            titlePos = new Vector2(250, 140);
+            
             titleUpdateTimer = 0.0f;
             introTextW = WrapText(titleFont,introText, 400);
             titleThemeCue.Play();
+            pressKeyTimer = 0.0f;
+            creditsTimer = 0.0f;
             //introTimer = 0.0f;
             titleSongCue = false;
+            
+            
             watch.Restart();
             
 
 
+        }
+
+        void InitCredits()
+        {
+            creditsTextPos = new Vector2(450, 650);
+            creditsTextW = WrapText(titleFont, creditsText, 800);
+            creditsTimer = 0.0f;
+            cueOrIsIt = false;
+            courtBot.StopSound();
+            creditsThemeCue = titleSoundBank.GetCue("creditsTheme");
+
+            if (creditsThemeCue != null)
+            {
+                if (!creditsThemeCue.IsPlaying)
+                    creditsThemeCue.Play();
+            }
         }
 
         /// <summary>
@@ -191,13 +254,16 @@ namespace MurderBall
             listBalls = new List<Ball>();
             courtBot = new CourtBot(this, listBalls);
             courtBot.InitMatch();
+            spriteList.Add(Content.Load<Texture2D>(@"man1"));
+            spriteList.Add(Content.Load<Texture2D>(@"man2"));
+            spriteList.Add(Content.Load<Texture2D>(@"man3"));
+            spriteList.Add(Content.Load<Texture2D>(@"man4"));
 
-            if (titleThemeCue.IsPlaying)
-                titleThemeCue.Stop(AudioStopOptions.AsAuthored);
+            StopAllSound();
             // TODO: use this.Content to load your game content here
-            courtSprite = Content.Load<Texture2D>(@"court");
-            player1 = new Player(Content.Load<Texture2D>(@"man1"), 1,this);
-            player2 = new Player(Content.Load<Texture2D>(@"man2"), 2,this);
+            //courtSprite = Content.Load<Texture2D>(@"court");
+            player1 = new Player(1,this);
+            player2 = new Player(2,this);
             player1.Foe = player2;
             player2.Foe = player1;
 
@@ -241,6 +307,7 @@ namespace MurderBall
                     courtBot.StopSound();
                     InitTitle();
                     titleState = true;
+                    prevState1 = keyState1;
 
                 }
                 else if (titleState)
@@ -259,10 +326,14 @@ namespace MurderBall
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            
 
+            if (creditsState)
+            {
+                CreditsUpdate(gameTime);
+            }
 
-            if (matchState) {
+            else if (matchState)
+            {
                 MatchUpdate(gameTime);
             }
             else if (helpScreenState)
@@ -275,13 +346,58 @@ namespace MurderBall
             }
         }
 
+        private void CreditsUpdate(GameTime gameTime)
+        {
+            titleUpdateTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
+            keyState1 = Keyboard.GetState();
+
+            if (titleUpdateTimer > titleUpdateInterval)
+            {
+
+
+                titleUpdateTimer = 0.0f;
+                titleParticles.Update(gameTime);
+            }
+            
+            creditsTextPos.Y -= 0.4f;
+            if (keyState1 != prevState1)
+            {
+                if (keyState1.IsKeyDown(Keys.Escape))
+                    Exit();
+            }
+            creditsTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (creditsTimer > 10.0f)
+            {
+                cueOrIsIt = true;
+            }
+
+            prevState1 = keyState1;
+        }
+
         void HelpScreenUpdate(GameTime gameTime)
         {
+            titleUpdateTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             keyState1 = Keyboard.GetState();
+
+            if (titleUpdateTimer > titleUpdateInterval)
+            {
+                
+
+                titleUpdateTimer = 0.0f;
+                titleParticles.Update(gameTime);
+            }
+            
+            player1.Update(gameTime);
+            player2.Update(gameTime);
+            if (titleThemeCue.IsPlaying)
+                titleThemeCue.Stop(AudioStopOptions.Immediate);
             if (keyState1 != prevState1)
             {
                 if (keyState1.IsKeyDown(player1.keyFire) ||
-                    keyState1.IsKeyDown(player2.keyFire))
+                    keyState1.IsKeyDown(player2.keyFire) || 
+                    (keyState1.IsKeyDown(Keys.Space)))
                 {
                     helpScreenState = false;
                     
@@ -296,6 +412,7 @@ namespace MurderBall
 
         void TitleUpdate(GameTime gameTime)
         {
+            pressKeyTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             titleUpdateTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             //introTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -319,6 +436,8 @@ namespace MurderBall
                 titleParticles.Update(gameTime);
             }
 
+            
+
             // TODO: Add your update logic here
             keyState1 = Keyboard.GetState();
 
@@ -328,9 +447,10 @@ namespace MurderBall
                     this.Exit();
                 checkExitKey(keyState1, GamePad.GetState(PlayerIndex.One));
 
-                if (keyState1.IsKeyDown(Keys.G) || keyState1.IsKeyDown(Keys.L))
+                if (keyState1.IsKeyDown(Keys.G) || keyState1.IsKeyDown(Keys.L) || keyState1.IsKeyDown(Keys.Space))
                 {
                     this.InitMatch();
+                    
                     helpScreenState = true;
                     titleState = false;
                 
@@ -356,13 +476,40 @@ namespace MurderBall
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
             {
-                this.Exit();
+                this.Quit();
 
             }
-            checkExitKey(keyState1, GamePad.GetState(PlayerIndex.One));
+            if (!courtBot.hasWinner)
+            {
+                checkExitKey(keyState1, GamePad.GetState(PlayerIndex.One));
+            }
+            else if (courtBot.hasWinner)
+            {
+                if (keyState1.IsKeyDown(Keys.Space))
+                {
+                    // Restart Match:
+                    this.InitMatch();
+                    courtBot.curRound += 1;
+                    courtBot.StopSound();
+                    helpScreenState = true;
+                    matchState = false;
+
+                    //titleState = false;
+                }
+                else if (keyState1.IsKeyDown(Keys.Escape))
+                {
+                    courtBot.StopSound();
+                    InitCredits();
+                    creditsState = true;
+                    matchState = false;
+                    prevState1 = keyState1;
+                    return;
+                }
+
+            }
 
             // Checks if round has started
-            if (courtBot.hasStarted)
+            if (courtBot.hasStarted || courtBot.hasWinner)
             {
 
                 
@@ -382,7 +529,7 @@ namespace MurderBall
             }
 
            // UpdateBalls(gameTime);
-
+            prevState1 = keyState1;
             base.Update(gameTime);
         }
 
@@ -394,7 +541,11 @@ namespace MurderBall
 
         protected override void Draw(GameTime gameTime)
         {
-            if (matchState)
+            if (creditsState)
+            {
+                DrawCredits(gameTime);
+            }
+            else if (matchState)
             {
                 DrawMatch(gameTime);
             }
@@ -413,10 +564,40 @@ namespace MurderBall
         protected void DrawHelpScreen(GameTime gameTime)
         {
             // Draw title screen here:
+            GraphicsDevice.Clear(Color.Black);
+            titleParticles.Draw(spriteBatch);
             spriteBatch.Begin();
             spriteBatch.Draw(helpScreenSprite, new Vector2(0, 0), Color.White);
+            
+            player1.Draw(spriteBatch);
+            player2.Draw(spriteBatch);
+            
             spriteBatch.End();
 
+        }
+
+        protected void Quit()
+        {
+            Initialize();
+        }
+
+        void DrawCredits(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.Black);
+            titleParticles.Draw(spriteBatch);
+            spriteBatch.Begin();
+            spriteBatch.DrawString(titleFont, 
+                creditsTextW, 
+                creditsTextPos, 
+                Color.White);
+            /*
+            if (cueOrIsIt)
+                spriteBatch.DrawString(titleFont,
+                "...or is it?",
+                new Vector2(400, 300),
+                Color.White);
+            */
+            spriteBatch.End();
         }
 
         /// <summary>
@@ -427,6 +608,7 @@ namespace MurderBall
         {
             GraphicsDevice.Clear(Color.Black);
             titleParticles.Draw(spriteBatch);
+            
             spriteBatch.Begin();
             
 
@@ -437,6 +619,7 @@ namespace MurderBall
             else
             {
                 if (titleDrawCue)
+                    //titleSpriteAnimation.Draw(spriteBatch,0,0,Color.White, 0.0f);
                     spriteBatch.Draw(titleSprite, titlePos, Color.White);
                 
                 spriteBatch.End();
@@ -445,6 +628,11 @@ namespace MurderBall
                 
                 spriteBatch.Begin();
                 
+            }
+
+            if (pressKeyTimer > 64.0f)
+            {
+                spriteBatch.DrawString(titleFont, "Press Space to Start", new Vector2(300, 550), Color.White);
             }
             spriteBatch.End();
             
@@ -463,7 +651,7 @@ namespace MurderBall
             
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
-            spriteBatch.Draw(courtSprite, 
+            spriteBatch.Draw(courtBot.getCourtTexture(), 
                 new Vector2(0,0), 
                 new Rectangle(0,0,800,600),
                 Color.White,0.0f, 
@@ -471,8 +659,9 @@ namespace MurderBall
                 new Vector2(1,1),
                 SpriteEffects.None,
                 1.0f);
-
-
+            spriteBatch.End();
+            courtBot.DrawBloodSplats(spriteBatch);
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
             courtBot.DrawBalls(spriteBatch);
             player1.Draw(spriteBatch);
             player2.Draw(spriteBatch);
@@ -480,11 +669,16 @@ namespace MurderBall
             courtBot.Draw(spriteBatch);
             
 
-            DrawHUD(spriteBatch);
+            
             spriteBatch.End();
             player1.DrawParticles(spriteBatch);
             player2.DrawParticles(spriteBatch);
             courtBot.DrawParticles(spriteBatch);
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            DrawHUD(spriteBatch);
+            if (courtBot.hasWinner)
+                spriteBatch.DrawString(titleFont, "Next Match: Space. End Game: ESC.", new Vector2(225, 550), Color.White);
+            spriteBatch.End();
            
         }
 
@@ -494,17 +688,38 @@ namespace MurderBall
         /// </summary>
         /// <param name="spriteBatch"></param>
         private void DrawHUD(SpriteBatch spriteBatch) {
-            int p1h = Math.Max(player1.HitPoints, 0);
-            int p2h = Math.Max(player2.HitPoints, 0);
+            int p1h = Math.Max((int)player1.HitBar, 0);
+            int p2h = Math.Max((int)player2.HitBar, 0);
 
-            spriteBatch.DrawString(titleFont,
+            spriteBatch.DrawString(courtBot.spriteFont,
                 p1h.ToString(),
-                new Vector2(10, 10), Color.Yellow ,0.0f, new Vector2(0,0),new Vector2(1,1),SpriteEffects.None, 0);
+                new Vector2(10, 5), 
+                Color.GreenYellow,
+                0.0f, 
+                new Vector2(0,0),
+                new Vector2(1,1),
+                SpriteEffects.None, 0);
 
-            spriteBatch.DrawString(titleFont,
+            spriteBatch.DrawString(courtBot.spriteFont,
                 p2h.ToString(),
-                new Vector2(760, 10), Color.Yellow, 0.0f, new Vector2(0,0),new Vector2(1,1),SpriteEffects.None, 0);
+                new Vector2(690, 5), Color.GreenYellow, 0.0f, new Vector2(0, 0), new Vector2(1, 1), SpriteEffects.None, 0);
 
+        }
+
+        public void StopAllSound()
+        {
+            if (titleThemeCue != null)
+            {
+                if (titleThemeCue.IsPlaying)
+                    titleThemeCue.Stop(AudioStopOptions.Immediate);
+
+            }
+            if (creditsThemeCue != null)
+            {
+                if (creditsThemeCue.IsPlaying)
+                    creditsThemeCue.Stop(AudioStopOptions.Immediate);
+
+            }
         }
 
         public AudioEngine Audio

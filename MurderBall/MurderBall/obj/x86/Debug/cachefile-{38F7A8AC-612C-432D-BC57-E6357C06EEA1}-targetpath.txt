@@ -1,10 +1,7 @@
-Content\man.xnb
 Content\ball.xnb
-Content\particle_base.xnb
 Content\man1.xnb
 Content\man2.xnb
 Content\title.xnb
-Content\court.xnb
 Content\splat2.xnb
 Content\splat3.xnb
 Content\splat1.xnb
@@ -20,13 +17,24 @@ Content\smoke.xnb
 Content\CourtBot.xnb
 Content\flame.xnb
 Content\aid.xnb
-Content\helpscreen.xnb
 Content\flamer.xnb
 Content\powerup.xnb
 Content\smoke2.xnb
 Content\laser.xnb
 Content\laserGun.xnb
 Content\electric.xnb
+Content\bones1.xnb
+Content\innards1.xnb
+Content\court1.xnb
+Content\court2.xnb
+Content\court3.xnb
+Content\court4.xnb
+Content\court5.xnb
+Content\court6.xnb
+Content\man3.xnb
+Content\man4.xnb
+Content\particle_base.xnb
+Content\helpscreen.xnb
 Content\MurderBallSound.xgs
 Content\Ball Sounds.xwb
 Content\BG Music.xwb

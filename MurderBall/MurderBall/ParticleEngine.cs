@@ -16,9 +16,12 @@ namespace MurderBall
         private List<Particle> particles;
         private List<Texture2D> textures;
         public Boolean hasHitBox;
+        public Boolean permanent;
+        public Boolean stays;
 
         // Particle settings:
        // public BlendState blendState { get; set; }
+        public float damage { get; set; }
         public Vector2 velocityMax;
         public Vector2 velocityMin;
         public int angleMax { get; set; }
@@ -35,6 +38,8 @@ namespace MurderBall
         public int TTLMin { get; set; } // time to live
         public Rectangle sourceRect { get; set; }
         public int maxParticles { get; set; }
+        public int minRandParticles { get; set; }
+        public int maxRandParticles { get; set; }
         public int sdMin { get; set; }// Scaling delta min
         public int sdMax { get; set; } // Scaling delta max
         public int generateRate { get; set; }
@@ -45,6 +50,7 @@ namespace MurderBall
         public float produceDelay { get; set; }
         public SpriteSortMode spMode { get; set; }
         public BlendState bState { get; set; }
+        
 
 
 
@@ -77,6 +83,8 @@ namespace MurderBall
             
             spMode = SpriteSortMode.Deferred;
             maxParticles = 200;
+            maxRandParticles = 200;
+            minRandParticles = maxParticles;
             sdMax = 100;
             sdMin = 100;
             gravity = 0.0f;
@@ -90,6 +98,9 @@ namespace MurderBall
             lastProduct = 0.0f;
             colorVelocity = new Vector4(0,0,0,0);
             hasHitBox = false;
+            damage = 0.0f;
+            permanent = false;
+            stays = false;
             
         }
 
@@ -99,6 +110,13 @@ namespace MurderBall
             startDelay = 0.0f;
             isActive = true;
         }
+
+        public void setMaxParticles(int min, int max)
+        {
+            maxParticles = random.Next(min, max);
+        }
+
+
 
         public void stop()
         {
@@ -194,7 +212,8 @@ namespace MurderBall
             for (int curP = 0; curP < particles.Count; curP++)
             {
                 // Update
-                particles[curP].Update();
+                if (!(!isActive && stays))
+                    particles[curP].Update();
                 // Check for collisions with players if needed:
                 if (hasHitBox)
                 {
@@ -210,9 +229,17 @@ namespace MurderBall
                         if (!parent.player1.isRolling)
                         {
                             if (HitType == 0)
-                                parent.player1.SetOnFire();
+                            {
+                                if (!parent.player1.onFire)
+                                    parent.player1.SetOnFire();
+                            }
                             else if (HitType == 1)
-                                parent.player1.Zap();
+                            {
+                                if (!parent.player1.zapped)
+                                    parent.player1.Zap();
+                            }
+                            else if (HitType == 2)
+                                parent.player1.HitPoints -= damage;
 
                         }
                     }
@@ -224,19 +251,32 @@ namespace MurderBall
                         if (!parent.player2.isRolling)
                         {
                             if (HitType == 0)
-                                parent.player2.SetOnFire();
+                            {
+                                if (!parent.player2.onFire)
+                                    parent.player2.SetOnFire();
+                            }
                             else if (HitType == 1)
-                                parent.player2.Zap();
+                            {
+                                if (!parent.player2.zapped)
+                                    parent.player2.Zap();
+                            }
+                            else if (HitType == 2)
+                                parent.player2.HitPoints -= damage;
 
                         }
                     }
                 }
 
-                // Remove
-                if (particles[curP].TTL <= 0)
+
+                if (!permanent)
                 {
-                    particles.RemoveAt(curP);
-                    curP--;
+
+                    // Remove
+                    if (particles[curP].TTL <= 0)
+                    {
+                        particles.RemoveAt(curP);
+                        curP--;
+                    }
                 }
             }
 

@@ -94,6 +94,7 @@ namespace MurderBall
 
             List<Texture2D> particleList = new List<Texture2D>();
             particleList.Add(parent.Content.Load<Texture2D>(@"particlecircle"));
+            particleList.Add(parent.Content.Load<Texture2D>(@"ball"));
 
 
             //Cue titleMusicCue = titleSoundBank.GetCue("titleTheme");
@@ -109,14 +110,93 @@ namespace MurderBall
             engine.ColMax = new Vector3(254, 88, 88);
             engine.sizeMax = 25;
             engine.sizeMin = 1;
-            engine.TTLMax = 200;
-            engine.TTLMin = 25;
+            engine.TTLMax = 150;
+            engine.TTLMin = 100;
             engine.velocityMax = new Vector2(5, 5);
             engine.velocityMin = new Vector2(-5, -5);
-            engine.maxParticles = 50;
+            engine.maxParticles = 500;
+            //engine.generateRate = 25;
+            engine.produceDelay = 0.15f;
             engine.sdMin = 101;
             engine.sdMax = 101;
             
+
+            return engine;
+        }
+
+        public ParticleEngine BallExplosion()
+        {
+            List<Texture2D> particleList = new List<Texture2D>();
+            //particleList.Add(parent.Content.Load<Texture2D>(@"explosion"));
+            particleList.Add(parent.Content.Load<Texture2D>(@"electric"));
+            particleList.Add(parent.Content.Load<Texture2D>(@"particlecircle"));
+            //particleList.Add(parent.Content.Load<Texture2D>(@"smoke"));
+
+
+            //Cue titleMusicCue = titleSoundBank.GetCue("titleTheme");
+            ParticleEngine engine = new ParticleEngine(particleList,
+                new Vector2(MurderBallGame.ScreenWidth / 2, MurderBallGame.ScreenHeight / 2),
+                parent);
+            // Set up all particle parameters. TODO: Move this to helper method.
+            engine.angularVelocityMin = 5;
+            engine.angularVelocityMax = 20;
+            engine.angleMin = 0;
+            engine.angleMax = 360;
+            engine.ColMin = new Vector3(0, 0, 0);
+            engine.ColMax = new Vector3(254, 254, 254);
+            engine.sizeMax = 75;
+            engine.sizeMin = 5;
+            engine.TTLMax = 30;
+            engine.TTLMin = 5;
+            engine.maxParticles = 250;
+            engine.generateRate = 250;
+            engine.velocityMax = new Vector2(10, 10);
+            engine.velocityMin = new Vector2(-10, -10);
+            engine.sourceRect = new Rectangle(150, 200, 500, 150);
+            engine.lifetime = 0.1f;
+            engine.isActive = false;
+            engine.hasHitBox = true;
+            engine.HitType = 2;
+            engine.damage = 0.001f;
+
+            return engine;
+        }
+
+        public ParticleEngine BallBounceExplosion()
+        {
+            List<Texture2D> particleList = new List<Texture2D>();
+            
+            particleList.Add(parent.Content.Load<Texture2D>(@"electric"));
+            particleList.Add(parent.Content.Load<Texture2D>(@"particlecircle"));
+            //particleList.Add(parent.Content.Load<Texture2D>(@"smoke"));
+
+
+            //Cue titleMusicCue = titleSoundBank.GetCue("titleTheme");
+            ParticleEngine engine = new ParticleEngine(particleList,
+                new Vector2(MurderBallGame.ScreenWidth / 2, MurderBallGame.ScreenHeight / 2),
+                parent);
+            // Set up all particle parameters. TODO: Move this to helper method.
+            engine.angularVelocityMin = 5;
+            engine.angularVelocityMax = 20;
+            engine.angleMin = 0;
+            engine.angleMax = 360;
+            engine.ColMin = new Vector3(0, 0, 0);
+            engine.ColMax = new Vector3(254, 254, 254);
+            engine.sizeMax = 50;
+            engine.sizeMin = 2;
+            engine.TTLMax = 20;
+            engine.TTLMin = 5;
+            engine.maxParticles = 25;
+            engine.generateRate = 25;
+            engine.velocityMax = new Vector2(5, 5);
+            engine.velocityMin = new Vector2(-5, -5);
+            engine.sourceRect = new Rectangle(150, 200, 500, 150);
+            engine.lifetime = 0.05f;
+            engine.isActive = false;
+            engine.hasHitBox = true;
+            engine.HitType = 2;
+            engine.damage = 0.001f;
+
 
             return engine;
         }
@@ -195,18 +275,17 @@ namespace MurderBall
             ParticleEngine engine = new ParticleEngine(particleList, new Vector2(0, 0), parent);
             // Set up all particle parameters. TODO: Move this to helper method.
             engine.angularVelocityMin = 0;
-            engine.angularVelocityMax = 50;
+            engine.angularVelocityMax = 10;
             engine.angleMin = 0;
             engine.angleMax = 360;
-            //engine.ColMin = new Vector3(0, 0, 0);
-            //engine.ColMax = new Vector3(255, 255, 255);
-            engine.sizeMax = 250;
+            
+            engine.sizeMax = 200;
             engine.sizeMin = 50;
             engine.TTLMax = 15;
             engine.TTLMin = 5;
             engine.velocityMax = new Vector2(0, 0);
             engine.velocityMin = new Vector2(0, 0);
-            engine.lifetime = 3.0f;
+            engine.lifetime = 2.5f;
             engine.isActive = false;
             engine.generateRate = 5;
             engine.maxParticles = 10;
@@ -221,11 +300,15 @@ namespace MurderBall
         {
 
             List<Texture2D> particleList = new List<Texture2D>();
-            particleList.Add(parent.Content.Load<Texture2D>(@"particle_base"));
+            particleList.Add(parent.Content.Load<Texture2D>(@"splat1"));
+            particleList.Add(parent.Content.Load<Texture2D>(@"splat2"));
+            particleList.Add(parent.Content.Load<Texture2D>(@"splat3"));
 
 
             //Cue titleMusicCue = titleSoundBank.GetCue("titleTheme");
-            ParticleEngine engine = new ParticleEngine(particleList, new Vector2(player.X, player.Y), parent);
+            ParticleEngine engine = new ParticleEngine(particleList, 
+                new Vector2(player.X + 25, player.Y+15),
+                parent);
             // Set up all particle parameters. TODO: Move this to helper method.
             engine.angularVelocityMin = 0;
             engine.angularVelocityMax = 99;
@@ -233,20 +316,57 @@ namespace MurderBall
             engine.angleMax = 360;
             engine.ColMin = new Vector3(255, 0, 0);
             engine.ColMax = new Vector3(255, 0, 0);
+            engine.sizeMax = 50;
+            engine.sizeMin = 1;
+            engine.TTLMax = 5;
+            engine.TTLMin = 3;
+            engine.velocityMax = new Vector2(3, 3);
+            engine.velocityMin = new Vector2(-3, -3);
+            engine.lifetime = 0.3f;
+            engine.isActive = false;
+            //engine.minParticles = 5;
+            //engine.maxParticles = 25;
+            engine.setMaxParticles(15, 30);
+            engine.generateRate = 10;
+            engine.gravity = MurderBallGame.grav;
+            engine.bState = BlendState.AlphaBlend;
+            engine.permanent = true;
+            engine.stays = true;
+            return engine;
+        }
+
+        public ParticleEngine bloodSplats(Rectangle box)
+        {
+
+            List<Texture2D> particleList = new List<Texture2D>();
+            particleList.Add(parent.Content.Load<Texture2D>(@"particle_base"));
+
+
+            //Cue titleMusicCue = titleSoundBank.GetCue("titleTheme");
+            ParticleEngine engine = new ParticleEngine(particleList, new Vector2(0, 0), parent);
+            // Set up all particle parameters. TODO: Move this to helper method.
+            engine.angularVelocityMin = 0;
+            engine.angularVelocityMax = 0;
+            engine.angleMin = 0;
+            engine.angleMax = 360;
+            engine.ColMin = new Vector3(255, 0, 0);
+            engine.ColMax = new Vector3(255, 0, 0);
             engine.sizeMax = 2;
             engine.sizeMin = 1;
-            engine.TTLMax = 25;
+            engine.TTLMax = 5;
             engine.TTLMin = 3;
-            engine.velocityMax = new Vector2(5, 5);
-            engine.velocityMin = new Vector2(-5, -5);
-            engine.lifetime = 0.5f;
-            engine.isActive = false;
-            engine.generateRate = 100;
-            engine.maxParticles = 300;
-            engine.generateRate = 300;
-            engine.gravity = MurderBallGame.grav;
+            engine.velocityMax = new Vector2(0, 0);
+            engine.velocityMin = new Vector2(0, 0);
+            engine.lifetime = 1.0f;
+            engine.startDelay = 0.5f;
+            engine.isActive = true;
+            engine.permanent = true;
+            engine.maxParticles = 75;
+            engine.generateRate = 75;
+            //engine.gravity = MurderBallGame.grav;
+            engine.sourceRect = box;
             engine.bState = BlendState.Opaque;
-            
+
             return engine;
         }
 
@@ -375,19 +495,95 @@ namespace MurderBall
             engine.angularVelocityMin = 0;
             engine.generateRate = 15;
             engine.maxParticles = 1000;
-            engine.lifetime = 1.0f;
+            engine.lifetime = 2.0f;
             engine.isActive = false;
             engine.hasHitBox = true;
             engine.TTLMax = 80;
             engine.TTLMin = 50;
             engine.bState = BlendState.AlphaBlend;
             engine.HitType = 1;
+            //engine.startDelay = 1.0f;
             
             engine.sizeMax = 50;
             engine.sizeMin = 50;
             //engine.sdMin = 101;
             //engine.sdMax = 103;
             //engine.produceDelay = 0.000005f;
+
+            return engine;
+        }
+
+        public ParticleEngine ManExplosion()
+        {
+
+            List<Texture2D> particleList = new List<Texture2D>();
+            particleList.Add(parent.Content.Load<Texture2D>(@"splat1"));
+            particleList.Add(parent.Content.Load<Texture2D>(@"splat2"));
+            particleList.Add(parent.Content.Load<Texture2D>(@"splat3"));
+
+
+            //Cue titleMusicCue = titleSoundBank.GetCue("titleTheme");
+            ParticleEngine engine = new ParticleEngine(particleList,
+                new Vector2(MurderBallGame.ScreenWidth / 2, MurderBallGame.ScreenHeight / 2),
+                parent);
+            // Set up all particle parameters. TODO: Move this to helper method.
+            engine.angularVelocityMin = 5;
+            engine.angularVelocityMax = 25;
+            engine.angleMin = 0;
+            engine.angleMax = 360;
+            engine.ColMin = new Vector3(0, 0, 0);
+            engine.ColMax = new Vector3(254, 254, 254);
+            engine.sizeMax = 200;
+            engine.sizeMin = 15;
+            engine.maxParticles = 300;
+            engine.generateRate = 50;
+            engine.TTLMax = 50;
+            engine.TTLMin = 5;
+            engine.velocityMax = new Vector2(10, 10);
+            engine.velocityMin = new Vector2(-10, -10);
+            engine.bState = BlendState.AlphaBlend;
+            engine.isActive = false;
+            engine.lifetime = 0.5f;
+
+
+            return engine;
+        }
+
+        public ParticleEngine ManExplosionInnards()
+        {
+
+            List<Texture2D> particleList = new List<Texture2D>();
+            particleList.Add(parent.Content.Load<Texture2D>(@"splat1"));
+            particleList.Add(parent.Content.Load<Texture2D>(@"innards1"));
+            particleList.Add(parent.Content.Load<Texture2D>(@"bones1"));
+
+
+            //Cue titleMusicCue = titleSoundBank.GetCue("titleTheme");
+            ParticleEngine engine = new ParticleEngine(particleList,
+                new Vector2(MurderBallGame.ScreenWidth / 2, MurderBallGame.ScreenHeight / 2),
+                parent);
+            // Set up all particle parameters. TODO: Move this to helper method.
+            engine.angularVelocityMin = 5;
+            engine.angularVelocityMax = 15;
+            engine.angleMin = 0;
+            engine.angleMax = 360;
+            engine.ColMin = new Vector3(0, 0, 0);
+            engine.ColMax = new Vector3(254, 254, 254);
+            engine.sizeMax = 100;
+            engine.sizeMin = 15;
+            engine.permanent = true;
+            engine.sdMin = 100;
+            engine.sdMax = 101;
+            engine.maxParticles = 50;
+            engine.generateRate = 50;
+            engine.TTLMax = 50;
+            engine.TTLMin = 5;
+            engine.velocityMax = new Vector2(10, 10);
+            engine.velocityMin = new Vector2(-10, -10);
+            engine.bState = BlendState.AlphaBlend;
+            engine.isActive = false;
+            engine.lifetime = 0.5f;
+
 
             return engine;
         }

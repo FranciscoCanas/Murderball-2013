@@ -2,31 +2,13 @@
 <XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
   <Asset Type="Pipeline:BuildItemCollection">
     <Item>
-      <Source>man.png</Source>
-      <Name>man</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man.xnb</Output>
-      <Time>2011-12-20T18:25:14.3645059-05:00</Time>
-    </Item>
-    <Item>
       <Source>ball.png</Source>
       <Name>ball</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\ball.xnb</Output>
-      <Time>2011-12-28T18:17:06.8984518-05:00</Time>
-    </Item>
-    <Item>
-      <Source>particle_base.jpg</Source>
-      <Name>particle_base</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\particle_base.xnb</Output>
-      <Time>2011-12-21T19:17:41.6155729-05:00</Time>
+      <Time>2012-01-15T17:09:18.2602332-05:00</Time>
     </Item>
     <Item>
       <Source>man1.png</Source>
@@ -35,7 +17,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man1.xnb</Output>
-      <Time>2012-01-13T19:37:08.2233425-05:00</Time>
+      <Time>2012-01-18T14:35:16-05:00</Time>
     </Item>
     <Item>
       <Source>man2.png</Source>
@@ -44,7 +26,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man2.xnb</Output>
-      <Time>2011-12-25T12:26:04.6479614-05:00</Time>
+      <Time>2012-01-18T14:35:28-05:00</Time>
     </Item>
     <Item>
       <Source>title.png</Source>
@@ -53,16 +35,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\title.xnb</Output>
-      <Time>2011-12-28T18:17:06.9254533-05:00</Time>
-    </Item>
-    <Item>
-      <Source>court.png</Source>
-      <Name>court</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court.xnb</Output>
-      <Time>2012-01-14T12:34:56.5997649-05:00</Time>
+      <Time>2012-01-18T23:14:09.1940039-05:00</Time>
     </Item>
     <Item>
       <Source>splat2.png</Source>
@@ -71,7 +44,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat2.xnb</Output>
-      <Time>2011-12-28T18:17:06.9224531-05:00</Time>
+      <Time>2012-01-15T16:58:42.293858-05:00</Time>
     </Item>
     <Item>
       <Source>splat3.png</Source>
@@ -80,7 +53,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat3.xnb</Output>
-      <Time>2011-12-28T18:17:06.9234532-05:00</Time>
+      <Time>2012-01-15T16:57:27.1555603-05:00</Time>
     </Item>
     <Item>
       <Source>splat1.png</Source>
@@ -89,7 +62,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat1.xnb</Output>
-      <Time>2011-12-28T18:17:06.9214531-05:00</Time>
+      <Time>2012-01-15T17:07:35.4833547-05:00</Time>
     </Item>
     <Item>
       <Source>explosion.png</Source>
@@ -98,7 +71,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\explosion.xnb</Output>
-      <Time>2012-01-01T12:54:43.1906758-05:00</Time>
+      <Time>2012-01-17T19:39:38-05:00</Time>
     </Item>
     <Item>
       <Source>fire.png</Source>
@@ -107,7 +80,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\fire.xnb</Output>
-      <Time>2011-12-28T18:17:06.9114525-05:00</Time>
+      <Time>2012-01-17T19:11:58-05:00</Time>
     </Item>
     <Item>
       <Source>ballshadow.png</Source>
@@ -116,7 +89,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\ballshadow.xnb</Output>
-      <Time>2011-12-30T15:12:27.8158887-05:00</Time>
+      <Time>2012-01-15T21:22:35.570079-05:00</Time>
     </Item>
     <Item>
       <Source>MurderballTheme.wav</Source>
@@ -125,7 +98,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\MurderballTheme.xnb</Output>
-      <Time>2012-01-12T13:28:54.5264264-05:00</Time>
+      <Time>2012-01-16T21:38:41.4245098-05:00</Time>
     </Item>
     <Item>
       <Source>28917__junggle__btn107.wav</Source>
@@ -179,7 +152,7 @@
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\CourtBot.xnb</Output>
-      <Time>2012-01-04T16:34:18.4025403-05:00</Time>
+      <Time>2012-01-17T15:26:48.9879749-05:00</Time>
     </Item>
     <Item>
       <Source>flame.png</Source>
@@ -188,7 +161,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\flame.xnb</Output>
-      <Time>2012-01-10T13:05:36.2205108-05:00</Time>
+      <Time>2012-01-17T18:56:24-05:00</Time>
     </Item>
     <Item>
       <Source>aid.png</Source>
@@ -198,15 +171,6 @@
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\aid.xnb</Output>
       <Time>2012-01-12T15:15:43.7250115-05:00</Time>
-    </Item>
-    <Item>
-      <Source>helpscreen.jpg</Source>
-      <Name>helpscreen</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\helpscreen.xnb</Output>
-      <Time>2012-01-12T15:27:24.1340727-05:00</Time>
     </Item>
     <Item>
       <Source>flamer.png</Source>
@@ -224,7 +188,7 @@
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\powerup.xnb</Output>
-      <Time>2012-01-13T12:10:17.2666454-05:00</Time>
+      <Time>2012-01-16T21:39:34.139525-05:00</Time>
     </Item>
     <Item>
       <Source>smoke2.png</Source>
@@ -233,7 +197,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\smoke2.xnb</Output>
-      <Time>2012-01-13T16:40:56.88072-05:00</Time>
+      <Time>2012-01-17T18:54:38-05:00</Time>
     </Item>
     <Item>
       <Source>laser.png</Source>
@@ -261,6 +225,114 @@
       <Options>None</Options>
       <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\electric.xnb</Output>
       <Time>2012-01-14T13:10:00.1330802-05:00</Time>
+    </Item>
+    <Item>
+      <Source>bones1.png</Source>
+      <Name>bones1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\bones1.xnb</Output>
+      <Time>2012-01-15T21:24:44.2794408-05:00</Time>
+    </Item>
+    <Item>
+      <Source>innards1.png</Source>
+      <Name>innards1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\innards1.xnb</Output>
+      <Time>2012-01-15T21:27:18.4862609-05:00</Time>
+    </Item>
+    <Item>
+      <Source>court1.jpg</Source>
+      <Name>court1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court1.xnb</Output>
+      <Time>2012-01-18T09:13:34-05:00</Time>
+    </Item>
+    <Item>
+      <Source>court2.jpg</Source>
+      <Name>court2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court2.xnb</Output>
+      <Time>2012-01-18T09:15:32-05:00</Time>
+    </Item>
+    <Item>
+      <Source>court3.jpg</Source>
+      <Name>court3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court3.xnb</Output>
+      <Time>2012-01-18T09:17:38-05:00</Time>
+    </Item>
+    <Item>
+      <Source>court4.jpg</Source>
+      <Name>court4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court4.xnb</Output>
+      <Time>2012-01-18T09:19:34-05:00</Time>
+    </Item>
+    <Item>
+      <Source>court5.jpg</Source>
+      <Name>court5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court5.xnb</Output>
+      <Time>2012-01-18T09:20:06-05:00</Time>
+    </Item>
+    <Item>
+      <Source>court6.jpg</Source>
+      <Name>court6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court6.xnb</Output>
+      <Time>2012-01-18T09:21:24-05:00</Time>
+    </Item>
+    <Item>
+      <Source>man3.png</Source>
+      <Name>man3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man3.xnb</Output>
+      <Time>2012-01-18T14:35:42-05:00</Time>
+    </Item>
+    <Item>
+      <Source>man4.png</Source>
+      <Name>man4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man4.xnb</Output>
+      <Time>2012-01-18T14:36:18-05:00</Time>
+    </Item>
+    <Item>
+      <Source>particle_base.png</Source>
+      <Name>particle_base</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\particle_base.xnb</Output>
+      <Time>2012-01-17T19:40:34-05:00</Time>
+    </Item>
+    <Item>
+      <Source>helpscreen.png</Source>
+      <Name>helpscreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\helpscreen.xnb</Output>
+      <Time>2012-01-19T13:41:12-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

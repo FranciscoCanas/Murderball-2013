@@ -30,11 +30,19 @@ namespace MurderBall
         float Depth = 0.0f;
 
         bool bAnimating = true;
+        bool repeats = true;
+
+        public SpriteEffects effects { get; set; }
 
         public int X
         {
             get { return iScreenX; }
             set { iScreenX = value; }
+        }
+
+        public Boolean Repeats
+        {
+            set { repeats = value; }
         }
 
         public int Y
@@ -68,7 +76,21 @@ namespace MurderBall
         public int OffsetY
         {
             set { iFrameOffsetY = value; }
+
+        
         }
+
+        public int FrameCount
+        {
+            set { iFrameCount = value; }
+        }
+
+        public int CurrentFrame
+        {
+            set { iCurrentFrame = value; }
+        }
+
+        
 
         public AnimatedSprite(
           Texture2D texture,
@@ -111,7 +133,14 @@ namespace MurderBall
                 if (fElapsed > fFrameRate)
                 {
                     // Increment the current frame, wrapping back to 0 at iFrameCount
-                    iCurrentFrame = ((iCurrentFrame + 1) % iFrameCount);
+                    if (repeats)
+                    {
+                        iCurrentFrame = ((iCurrentFrame + 1) % iFrameCount);
+                    }
+                    else
+                    {
+                        iCurrentFrame = (Math.Min(iCurrentFrame + 1, iFrameCount));
+                    }
 
                     // Reset the elapsed frame time.
                     fElapsed = 0.0f;
@@ -131,7 +160,7 @@ namespace MurderBall
             
             spriteBatch.Draw(t2dTexture, new Vector2(iScreenX + XOffset,
                   iScreenY + YOffset), GetSourceRect(), col,
-               Rotation, fOrigin, fScale, SpriteEffects.None, depth);
+               Rotation, fOrigin, fScale, effects, depth);
             
             if (NeedBeginEnd)
                 spriteBatch.End();

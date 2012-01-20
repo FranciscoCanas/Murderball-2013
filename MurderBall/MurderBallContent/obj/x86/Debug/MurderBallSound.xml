@@ -11,8 +11,8 @@
     Compression Preset Name = &lt;none&gt;;
     Xbox Bank Last Modified Low = 0;
     Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 2344741733;
-    PC Bank Last Modified High = 30196751;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
     Header Last Modified Low = 0;
     Header Last Modified High = 0;
     Bank Last Revised Low = 686714928;
@@ -36,8 +36,8 @@
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2229846650;
-            Last Modified High = 30196707;
+            Last Modified Low = 2173718342;
+            Last Modified High = 30196168;
         }
     }
 
@@ -59,8 +59,8 @@
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2229886652;
-            Last Modified High = 30196707;
+            Last Modified Low = 2233791778;
+            Last Modified High = 30196168;
         }
     }
 }
@@ -75,14 +75,8 @@
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = BG Music;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
-    Bank Last Revised Low = 778075251;
-    Bank Last Revised High = 30200161;
+    Bank Last Revised Low = 3223703841;
+    Bank Last Revised High = 30201159;
 
     Wave
     {
@@ -97,13 +91,13 @@
             Channels = 2;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
-            Play Region Offset = 124;
-            Play Region Length = 21168000;
+            Play Region Offset = 44;
+            Play Region Length = 20462400;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2424181191;
-            Last Modified High = 30196748;
+            Last Modified Low = 533566698;
+            Last Modified High = 30201025;
         }
     }
 
@@ -121,12 +115,35 @@
             Sampling Rate = 44100;
             Bits Per Sample = 1;
             Play Region Offset = 124;
-            Play Region Length = 17735352;
+            Play Region Length = 17735348;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 4208696385;
-            Last Modified High = 30200158;
+            Last Modified Low = 383739767;
+            Last Modified High = 30201024;
+        }
+    }
+
+    Wave
+    {
+        Name = creditsTheme;
+        File = creditsTheme.wav;
+        Build Settings Last Modified Low = 3155679950;
+        Build Settings Last Modified High = 30201159;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 27440000;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2967669197;
+            Last Modified High = 30201159;
         }
     }
 }
@@ -141,8 +158,14 @@
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = &lt;none&gt;;
-    Bank Last Revised Low = 3119295635;
-    Bank Last Revised High = 30200410;
+    Xbox Bank Last Modified Low = 0;
+    Xbox Bank Last Modified High = 0;
+    PC Bank Last Modified Low = 0;
+    PC Bank Last Modified High = 0;
+    Header Last Modified Low = 0;
+    Header Last Modified High = 0;
+    Bank Last Revised Low = 1227446041;
+    Bank Last Revised High = 30201149;
 
     Wave
     {
@@ -157,13 +180,13 @@
             Channels = 2;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
-            Play Region Offset = 44;
+            Play Region Offset = 222;
             Play Region Length = 6680576;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2200339876;
-            Last Modified High = 30200159;
+            Last Modified Low = 805605534;
+            Last Modified High = 30201023;
         }
     }
 
@@ -180,13 +203,13 @@
             Channels = 2;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
-            Play Region Offset = 124;
+            Play Region Offset = 44;
             Play Region Length = 176400;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 954651222;
-            Last Modified High = 30200342;
+            Last Modified Low = 1060716850;
+            Last Modified High = 30201025;
         }
     }
 
@@ -204,12 +227,12 @@
             Sampling Rate = 44100;
             Bits Per Sample = 1;
             Play Region Offset = 44;
-            Play Region Length = 987136;
+            Play Region Length = 713508;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 943725533;
-            Last Modified High = 30200343;
+            Last Modified Low = 2820189124;
+            Last Modified High = 30201024;
         }
     }
 
@@ -231,8 +254,146 @@
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2837439513;
-            Last Modified High = 30200410;
+            Last Modified Low = 3274415104;
+            Last Modified High = 30201024;
+        }
+    }
+
+    Wave
+    {
+        Name = electrified;
+        File = electrified.wav;
+        Build Settings Last Modified Low = 1764283520;
+        Build Settings Last Modified High = 30200926;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 48000;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 1407596;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1912347198;
+            Last Modified High = 30201024;
+        }
+    }
+
+    Wave
+    {
+        Name = owBurning;
+        File = owBurning.wav;
+        Build Settings Last Modified Low = 3434839070;
+        Build Settings Last Modified High = 30200926;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 48000;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 593820;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 816252867;
+            Last Modified High = 30201025;
+        }
+    }
+
+    Wave
+    {
+        Name = finishHim;
+        File = finishHim.wav;
+        Build Settings Last Modified Low = 2004713996;
+        Build Settings Last Modified High = 30200928;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 48000;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 198298;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2230355387;
+            Last Modified High = 30201024;
+        }
+    }
+
+    Wave
+    {
+        Name = bigCheers;
+        File = bigCheers.wav;
+        Build Settings Last Modified Low = 769579852;
+        Build Settings Last Modified High = 30201149;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 48000;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 5084068;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 51468779;
+            Last Modified High = 30201149;
+        }
+    }
+
+    Wave
+    {
+        Name = boos;
+        File = boos.wav;
+        Build Settings Last Modified Low = 813942390;
+        Build Settings Last Modified High = 30201149;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 4365776;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 860646699;
+            Last Modified High = 30201148;
+        }
+    }
+
+    Wave
+    {
+        Name = gasp;
+        File = gasp.wav;
+        Build Settings Last Modified Low = 878656091;
+        Build Settings Last Modified High = 30201149;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 289372;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 3811965505;
+            Last Modified High = 30201148;
         }
     }
 }

@@ -54,13 +54,11 @@ D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\explosion.x
 D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\fire.xnb
 D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\smoke.xnb
 D:\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\ballshadow.xnb
-C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\ball.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\particle_base.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man1.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man2.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\title.xnb
-C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat2.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat3.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat1.xnb
@@ -77,15 +75,10 @@ C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\BG Music.xwb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\Ball Cues.xsb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\BG Music.xsb
-C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\MurderBall.exe
-C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\MurderBall.pdb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
-C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall.Strings.resources
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\GenerateResource.write.1.tlog
-C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall.exe
-C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall.pdb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\particlecircle.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\CourtBot.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\flame.xnb
@@ -99,3 +92,22 @@ C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\laser.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\laserGun.xnb
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\electric.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\bones1.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\innards1.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court1.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court2.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court3.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court4.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court5.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court6.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man3.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man4.xnb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\MurderBall2013.exe.manifest
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\MurderBall2013.application
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\MurderBall2013.exe
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\MurderBall2013.pdb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.Strings.resources
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.exe.manifest
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.application
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.exe
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.pdb

@@ -63,6 +63,10 @@ namespace MurderBall
         // Particles
         ParticleEngine sparks;
         ParticleEngine fireySparks;
+        ParticleEngine ballExplosion;
+        ParticleEngine ballBounceExplosion;
+
+        Cue cueWallHit;
         
 
         public Ball(Texture2D texture, MurderBallGame parent)
@@ -120,37 +124,27 @@ namespace MurderBall
             iBounceCount=0;
             iX = X;
             iY = Y;
-            int oY = target.Y;
-            int oX = target.X;
+            int oY = target.BoundingBox.Center.Y;
+            int oX = target.BoundingBox.Center.X;
 
 
             // Find some random error for X and Y speeds:
             Random rand = new Random();
-            float errorX = (float)(rand.NextDouble() - 0.5);
-            float errorY = (float)(rand.NextDouble() - 0.5);
+            float error = (float)(rand.NextDouble() - 0.5);
+            //float errorY = (float)(rand.NextDouble() - 0.5);
 
             
             // Some trig shit do get our aim right:
             deltaX = oX - X;
             deltaY = oY - Y;
             theta = (float)Math.Atan2((double)deltaY , (double)deltaX);
+            theta += (error/5.0f);
             fYSpeed = (float)((float)thrower.Power * Math.Sin(theta));
             fXSpeed = (float)((float)thrower.Power * Math.Cos(theta));
             fZSpeed = 0; // 0 at first, then gravity kicks in.
-            iZ = 24;
+            iZ = 20;
 
-            // Add error:
-            fYSpeed += (7*errorY);
-            fXSpeed += (7*errorX);
            
-            // Fix the facing on the angles:
-            /*
-            if ((oX - X) < 0)
-                fXSpeed *= -1.0f;
-            if ((oY - Y) < 0)
-               fYSpeed *= -1.0f;
-            */
-            //iFacing = Facing;
             curPlayer = null;
             isFired = true;
         }
@@ -159,7 +153,10 @@ namespace MurderBall
         {
             fElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
             fLastBounce += fElapsed;
+
             
+            ballExplosion.Update(gameTime);
+            ballBounceExplosion.Update(gameTime);
             // Update particles:
             if (sparks.isActive)
             {
@@ -181,8 +178,31 @@ namespace MurderBall
 
             if (curPlayer != null)
             {
-                iX = curPlayer.X + 25;
-                iY = curPlayer.Y + 25;
+                if (curPlayer.PlayerNum == 1)
+                {
+                    if (curPlayer.isThrowing)
+                    {
+                        iX = curPlayer.BoundingBox.Left;
+                        iY = curPlayer.BoundingBox.Top; 
+                    }
+                    else
+                        iX = curPlayer.BoundingBox.Left + 12;
+
+                }
+                else
+                {
+                    if (curPlayer.isThrowing)
+                    {
+                        iX = curPlayer.BoundingBox.Right;
+                        iY = curPlayer.BoundingBox.Top;
+                    }
+                    else
+                        iX = curPlayer.BoundingBox.Right - 12;
+                }
+                
+                iY = curPlayer.BoundingBox.Bottom - shadowOffset;
+
+                this.iZ = 20;
             } else if (isFired)
             {
                 
@@ -209,34 +229,39 @@ namespace MurderBall
 
                         // If ball hits edge of play area, bounce that shit.
 
-                        if (BoundingBox.Bottom > MurderBallGame.rCourt.Bottom)
+                        if (BoundingBox.Bottom >= MurderBallGame.rCourt.Bottom)
                         {
+                            iY = MurderBallGame.rCourt.Bottom - (BoundingBox.Height + (int)fYSpeed);
+                            fYSpeed *= -1 * fSpeedBounceMult;
+                            
+
+
+                            HitWall();
+                        }
+
+                        if (BoundingBox.Top <= MurderBallGame.rCourt.Top)
+                        {
+                            iY = MurderBallGame.rCourt.Top - ((int)fYSpeed);
                             fYSpeed *= -1 * fSpeedBounceMult;
 
-
+                            
                             HitWall();
                         }
 
-                        if (BoundingBox.Top < MurderBallGame.rCourt.Top)
+                        if (BoundingBox.Left <= MurderBallGame.rCourt.Left)
                         {
-                            fYSpeed *= -1 * fSpeedBounceMult;
-
-
-                            HitWall();
-                        }
-
-                        if (BoundingBox.Left < MurderBallGame.rCourt.Left)
-                        {
+                            iX = MurderBallGame.rCourt.Left - ((int)fXSpeed);
                             fXSpeed *= -1 * fSpeedBounceMult;
-
+                            
 
                             HitWall();
                         }
 
-                        if (BoundingBox.Right > MurderBallGame.rCourt.Right)
+                        if (BoundingBox.Right >= MurderBallGame.rCourt.Right)
                         {
+                            iX = MurderBallGame.rCourt.Right - (BoundingBox.Width + (int)fXSpeed);
                             fXSpeed *= -1 * fSpeedBounceMult;
-
+                            
 
                             HitWall();
                         }
@@ -245,6 +270,11 @@ namespace MurderBall
                         if (iZ <= 0)
                         {
                             fZSpeed *= -1;
+                            if (isPowered)
+                            {
+                                ballBounceExplosion.sourceRect = new Rectangle(this.X - 10, this.Y - 10, 25, 25);
+                                ballBounceExplosion.start();
+                            }
                         }
 
                         // Slow the balls down.
@@ -292,7 +322,7 @@ namespace MurderBall
 
         public void CheckHit(Player player)
         {
-            if (BoundingBox.Intersects(player.BoundingBox))
+            if (BoundingBox.Intersects(player.BoundingBox) && !(player.isRolling || player.isHit))
             {
                 HitPlayer(player);
                 fSpeedMultiple *= 0.85f;
@@ -303,9 +333,12 @@ namespace MurderBall
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(shadow, new Vector2(iX,iY), null, Color.White,
-               0.0f, new Vector2(xOrigin,yOrigin), 
-               new Vector2(xScale,yScale), SpriteEffects.None, GetDepth + 0.001f);
+            if (curPlayer == null)
+            {
+                sb.Draw(shadow, new Vector2(iX, iY), null, Color.White,
+                   0.0f, new Vector2(xOrigin, yOrigin),
+                   new Vector2(xScale, yScale), SpriteEffects.None, GetDepth + 0.001f);
+            }
 
             asBall.Draw(sb, iX, iY - iZ - shadowOffset, false, curColor, GetDepth);
             // Particles:
@@ -315,6 +348,8 @@ namespace MurderBall
 
         public void DrawParticles(SpriteBatch sb)
         {
+
+            
             if (sparks.isActive)
             {
                 
@@ -327,17 +362,26 @@ namespace MurderBall
                 fireySparks.Draw(sb);
                 
             }
+            ballExplosion.Draw(sb);
+            ballBounceExplosion.Draw(sb);
 
         }
 
         public void HitWall()
         {
-            Cue cueWallHit = ballSounds.GetCue("hitWall");
-            cueWallHit.Play();
+            if ((cueWallHit == null) || (!cueWallHit.IsPlaying)) {
+                cueWallHit = ballSounds.GetCue("hitWall");
+                cueWallHit.Play();
+            }
             iBounceCount += 1;
             fLastBounce = 0;
             sparks.emitterLocation = new Vector2(this.X, this.Y);
             sparks.start();
+            if (isPowered)
+            {
+                ballExplosion.sourceRect = new Rectangle(this.X - 10, this.Y - 10, 25, 25);
+                ballExplosion.start();
+            }
         }
 
         /// <summary>
@@ -355,6 +399,11 @@ namespace MurderBall
             
             //fireySparks.start();
             sparks.start();
+            if (isPowered)
+            {
+                ballExplosion.sourceRect = new Rectangle(this.X - 10, this.Y - 10, 25, 25);
+                ballExplosion.start();
+            }
             fLastBounce = 0;        
         }
 
@@ -363,8 +412,8 @@ namespace MurderBall
             ParticleEngineBuilder builder = new ParticleEngineBuilder(parent);
             sparks = builder.sparks(this);
             fireySparks = builder.fireSparks();
-            
-            
+            ballExplosion = builder.BallExplosion();
+            ballBounceExplosion = builder.BallBounceExplosion();
         }
 
         public float GetDepth
