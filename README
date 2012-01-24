@@ -4,17 +4,24 @@ Implemented Features:
 - Basic game structure: AnimatedSprite class, updates/draws, input, etc.
 - Players: Class, input, collision detection.
 - Balls: Class, physics, collision detection.
-
-To implement:
-- Balls: Particle effects
-- Players: Hitpoints, animations for rolling, getting hit.
+- Particle Effects: Explosions, fire, smoke,etc.
+- Players: Hitpoints, animations for rolling, getting hit. 
 - Title screen graphics
 - Improved sounds: bounces, hits, explosions
 - Title screen music and match music
+- Flame and laser traps during matches
+- Health drops during matches
+- Finishing move
+
+To implement:
+- Player Selection Screen
+- Different characters with their respective stats
+- Multiple finishing moves
+
+
 
 Possible future options: 
-- Multiple character select
-- Random traps and extra balls during matches
+- More random traps and extra balls during matches
 - Robot 'referee'
 - In-match txt commentary
 
