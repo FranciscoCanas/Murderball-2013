@@ -8,17 +8,11 @@ Content\splat1.xnb
 Content\explosion.xnb
 Content\fire.xnb
 Content\ballshadow.xnb
-Content\MurderballTheme.xnb
-Content\28917__junggle__btn107.xnb
-Content\32954__hardpcm__chip054.xnb
-Content\TitleIntro.xnb
 Content\particlecircle.xnb
 Content\smoke.xnb
-Content\CourtBot.xnb
 Content\flame.xnb
 Content\aid.xnb
 Content\flamer.xnb
-Content\powerup.xnb
 Content\smoke2.xnb
 Content\laser.xnb
 Content\laserGun.xnb
@@ -35,6 +29,13 @@ Content\man3.xnb
 Content\man4.xnb
 Content\particle_base.xnb
 Content\helpscreen.xnb
+Content\arcadehelpscreen.xnb
+Content\MurderballTheme.xnb
+Content\28917__junggle__btn107.xnb
+Content\32954__hardpcm__chip054.xnb
+Content\powerup.xnb
+Content\TitleIntro.xnb
+Content\CourtBot.xnb
 Content\MurderBallSound.xgs
 Content\Ball Sounds.xwb
 Content\BG Music.xwb

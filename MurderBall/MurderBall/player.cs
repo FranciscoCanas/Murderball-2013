@@ -120,17 +120,29 @@ namespace MurderBall
                     new Vector2(xOrigin,yOrigin));
 
                 spriteStanding.effects = SpriteEffects.None;
-                /*
-              
-                */
-                iX = 133;
-                iY = 200;
-                kUp = Keys.W;
-                kDown = Keys.S;
-                kLeft = Keys.A;
-                kRight = Keys.D;
-                kFire = Keys.G;
-                kRoll = Keys.F;
+                
+                    iX = 133;
+                    iY = 200;
+                
+                if (parent.usesArcade)
+                {
+                    kUp = Keys.Up;
+                    kDown = Keys.Down;
+                    kLeft = Keys.Left;
+                    kRight = Keys.Right;
+                    kRoll = Keys.X;
+                    kFire = Keys.Z;
+                }
+                else
+                {
+                    
+                    kUp = Keys.W;
+                    kDown = Keys.S;
+                    kLeft = Keys.A;
+                    kRight = Keys.D;
+                    kFire = Keys.G;
+                    kRoll = Keys.F;
+                }
             }
             if (player == 2)
             {
@@ -147,6 +159,16 @@ namespace MurderBall
 
                 iX = 610;
                 iY = 200;
+
+                if (parent.usesArcade)
+                {
+                    kUp = Keys.F;
+                    kDown = Keys.R;
+                    kLeft = Keys.G;
+                    kRight = Keys.D;
+                    kRoll = Keys.S;
+                    kFire = Keys.A;
+                }
                 
             }
 

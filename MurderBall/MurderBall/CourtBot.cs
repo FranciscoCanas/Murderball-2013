@@ -29,7 +29,8 @@ namespace MurderBall
         public List<Vector2> listBallCoords = new List<Vector2>(4);
         public List<Texture2D> courtTextures = new List<Texture2D>(4);
         private List<String> roundText = new List<String>();
-        private String winnerText = ""; // Used to show winner. Dynamically created.
+        public String winnerText = ""; // Used to show winner. Dynamically created.
+        public String noWinnersText = "Murderball does not\n       a winner.";
 
         // Particles:
         private ParticleEngineBuilder builder;
@@ -45,6 +46,10 @@ namespace MurderBall
         public Boolean hasWinner { get; set; }
         public Boolean playerDoneFor { get; set; }
         public Boolean startRound { get; set; }
+        public Boolean noWinnerGo { get; set; }
+
+        // Keeps track of winner;
+        public int winner { get; set; }
 
         // Timers and periods:
         private float timerFire { get; set; }
@@ -172,7 +177,9 @@ namespace MurderBall
             listBallCoords.Add(new Vector2(MurderBallGame.rCourt.Right - 60, MurderBallGame.rCourt.Top + 30));
             listBallCoords.Add(new Vector2(MurderBallGame.rCourt.Right - 50, MurderBallGame.rCourt.Bottom - 45));
             hasWinner = false;
+            winner = 0;
             playerDoneFor = false;
+            noWinnerGo = false;
 
             courtWaves = new WaveBank(parent.Audio, "Content\\Court Sounds.xwb");
             courtSounds = new SoundBank(parent.Audio, "Content\\Court Cues.xsb");
@@ -591,10 +598,12 @@ namespace MurderBall
         {
             if (bgMusic.IsPlaying)
                 bgMusic.Stop(AudioStopOptions.Immediate);
+            this.winner = winner.PlayerNum;
             hasWinner = true;
             hasStarted = false;
             //StopSound();
-            this.winnerText = "Winner!";
+            this.winnerText = "A winner is...";
+            
         }
 
         /// <summary>
@@ -721,6 +730,13 @@ namespace MurderBall
                 {
                     spriteBatch.DrawString(spriteFont, ((int)timerToStart).ToString(),
                         new Vector2(378, 5), Color.GreenYellow);
+                }
+
+                if (noWinnerGo)
+                {
+                    spriteBatch.DrawString(spriteFont, noWinnersText,
+                        new Vector2(125,200), Color.GreenYellow);
+
                 }
                 
                 return;
