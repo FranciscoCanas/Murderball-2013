@@ -111,3 +111,62 @@ C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBa
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.application
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.exe
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.pdb
+C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\arcadehelpscreen.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\ball.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man1.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man2.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\title.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat2.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat3.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\splat1.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\explosion.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\fire.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\ballshadow.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\particlecircle.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\smoke.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\flame.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\aid.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\flamer.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\smoke2.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\laser.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\laserGun.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\electric.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\bones1.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\innards1.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court1.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court2.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court3.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court4.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court5.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\court6.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man3.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\man4.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\particle_base.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\helpscreen.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\arcadehelpscreen.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\MurderballTheme.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\28917__junggle__btn107.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\32954__hardpcm__chip054.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\powerup.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\TitleIntro.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\CourtBot.xnb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\MurderBallSound.xgs
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\Ball Sounds.xwb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\BG Music.xwb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\Court Sounds.xwb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\Ball Cues.xsb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\BG Music.xsb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\Content\Court Cues.xsb
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\MurderBall2013.exe.manifest
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\MurderBall2013.application
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\MurderBall2013.exe
+D:\Development\Murderball-2013\MurderBall\MurderBall\bin\x86\Debug\MurderBall2013.pdb
+D:\Development\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Development\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+D:\Development\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.Strings.resources
+D:\Development\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\Development\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\Development\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.exe.manifest
+D:\Development\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.application
+D:\Development\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.exe
+D:\Development\Murderball-2013\MurderBall\MurderBall\obj\x86\Debug\MurderBall2013.pdb

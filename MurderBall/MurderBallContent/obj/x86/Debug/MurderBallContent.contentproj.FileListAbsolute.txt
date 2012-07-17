@@ -5,3 +5,5 @@ D:\repos\Murderball-2013\MurderBall\MurderBallContent\obj\x86\Debug\ResolveAssem
 D:\repos\Murderball-2013\MurderBall\MurderBallContent\obj\x86\Debug\MurderBallSound.xml
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBallContent\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Fran\repos\Murderball-2013\MurderBall\MurderBallContent\obj\x86\Debug\MurderBallSound.xml
+D:\Development\Murderball-2013\MurderBall\MurderBallContent\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Development\Murderball-2013\MurderBall\MurderBallContent\obj\x86\Debug\MurderBallSound.xml
